@@ -84128,13 +84128,11 @@
 	                    updateHour(booking, hourStart, minsStart, hourEnd, minsEnd);
 	                }
 	            });
-	
 	            //calculate the percentage of time filled for each hour in the hours object
 	            _jquery2.default.each(hours, function (i, hour) {
 	                var percent = hour.timeFilled / 60 * 100;
 	                hour.percentage = percent + '%';
 	            });
-	
 	            //console.log( 'HOURS OBJECT', hours );
 	            return hours;
 	        }
@@ -84189,6 +84187,51 @@
 	                date += d[2];
 	            }
 	
+	            var id = 0;
+	
+	            var bookingSpans = {};
+	
+	            _jquery2.default.each(bookingsByHours, function (key, bookings) {
+	
+	                bookingSpans[key] = bookings.bookings.map(function (book) {
+	
+	                    var width = '10',
+	                        left = '10';
+	
+	                    var split1 = book.end.split(":"),
+	                        endMins = split1[1],
+	                        endHour = split1[0],
+	                        split2 = book.start.split(":"),
+	                        startMins = split2[1],
+	                        startHour = split2[0];
+	
+	                    if (startHour === endHour) {
+	                        var mins = parseInt(endMins) - parseInt(startMins);
+	                        var perc = mins / 60 * 100;
+	                        width = perc;
+	                        left = startMins;
+	                    }
+	
+	                    if (parseInt(endHour) - parseInt(startHour) === 1) {
+	
+	                        if (parseInt(endMins) === 0) {
+	                            var _mins = 60 - parseInt(startMins);
+	                            console.log('startMins', startMins, _mins);
+	
+	                            width = _mins;
+	                            left = startMins;
+	                        }
+	                    }
+	
+	                    console.log(width, left);
+	
+	                    return _react2.default.createElement('span', { key: id++, className: 'expand duration', style: { width: width + 'px', position: 'absolute', left: left + 'px' } });
+	                });
+	            });
+	
+	            console.log('bookingSpans', bookingSpans);
+	
+	            console.log(bookingsByHours['10'].bookings);
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'col-sm-6 room' },
@@ -84245,17 +84288,29 @@
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'hr10' },
-	                                            _react2.default.createElement('span', { 'data-hour': '10', className: 'expand duration', style: { width: bookingsByHours["10"].percentage }, onClick: this.handleBookingClick })
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { 'data-hour': '10', className: 'expand duration', style: { width: '100px', background: 'red' }, onClick: this.handleBookingClick },
+	                                                bookingSpans["10"]
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'hr10-2' },
-	                                            _react2.default.createElement('span', { 'data-hour': '11', className: 'expand duration', style: { width: bookingsByHours["11"].percentage }, onClick: this.handleBookingClick })
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { 'data-hour': '11', className: 'expand duration', style: { width: '100px', background: 'red' }, onClick: this.handleBookingClick },
+	                                                bookingSpans["11"]
+	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'hr10-3' },
-	                                            _react2.default.createElement('span', { 'data-hour': '12', className: 'expand duration', style: { width: bookingsByHours["12"].percentage }, onClick: this.handleBookingClick })
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { 'data-hour': '12', className: 'expand duration', style: { width: '100px', background: 'red' }, onClick: this.handleBookingClick },
+	                                                bookingSpans["12"]
+	                                            )
 	                                        ),
 	                                        's                                    '
 	                                    ),

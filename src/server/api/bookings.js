@@ -19,7 +19,7 @@ var Booking = require( './../models/Booking.js' );
 
 function createBooking( req, res ){
 
-    checkIfTimeIsFree( req, res, function(){
+    checkIfTimeIsFree( req, res, function( room, date, start, end, user, company, comments ){
 
         var booking = new Booking({ room: room, date: date, start: start, end: end, user: user, company: company, comments: comments });
         console.log( 'booking', booking );
@@ -155,6 +155,24 @@ function checkIfTimeIsFree( req, res, callback ){
         var curStartInMinutesFromMidnight = (curStartHour*60) + curStartMins;
         var curDurationAddedToStartFromMidnight = curDuration + curStartInMinutesFromMidnight;
 
+        var startsBeforeExStart,
+            startsAfterExStart,
+            startsAtTheSameTimeAsExStart,
+
+            startsBeforeExEnd,
+            startsAfterExEnd,
+            startsAtTheSameTimeAsExEnd,
+
+            endsBeforeExStart,
+            endsAfterExStart,
+            endsAtTheSameTimeAsExStart,
+
+            endsBeforeExEnd,
+            endsAfterExEnd,
+            endsAtTheSameTimeAsExEnd;
+
+
+
         for ( var i = 0; i < length; i++ ) {
             var exBooking = existingBookings[i];
             if (exBooking.room == room) {
@@ -176,69 +194,89 @@ function checkIfTimeIsFree( req, res, callback ){
                 var exDurationAddedToStartFromMidnight = exDuration + exStartInMinutesFromMidnight;
 
 
-
                 if( curStartInMinutesFromMidnight < exStartInMinutesFromMidnight ){
                     console.log( 'starts before exStart');
+                    startsBeforeExStart = true;
                 }
                 if( curStartInMinutesFromMidnight > exStartInMinutesFromMidnight ){
                     console.log( 'starts after exStart');
+                    startsAfterExStart = true;
                 }
                 if( curStartInMinutesFromMidnight === exStartInMinutesFromMidnight ){
                     console.log( 'starts at the same time as exStart');
+                    startsAtTheSameTimeAsExStart = true;
                 }
 
 
 
                 if( curStartInMinutesFromMidnight < exDurationAddedToStartFromMidnight ){
                     console.log( 'starts before exEnd');
+                    startsBeforeExEnd = true;
                 }
                 if( curStartInMinutesFromMidnight > exDurationAddedToStartFromMidnight ){
                     console.log( 'starts after exEnd');
+                    startsAfterExEnd = true;
                 }
                 if( curStartInMinutesFromMidnight === exDurationAddedToStartFromMidnight ){
                     console.log( 'starts at same time as exEnd');
+                    startsAtTheSameTimeAsExEnd = true;
                 }
 
 
 
-                if( curDurationAddedToStartFromMidnight > exDurationAddedToStartFromMidnight ){
-                   console.log( 'ends after exEnd' );
-                }
-                if( curDurationAddedToStartFromMidnight < exDurationAddedToStartFromMidnight ){
-                    console.log( 'ends before exEnd' );
-                }
-                if( curDurationAddedToStartFromMidnight === exDurationAddedToStartFromMidnight ){
-                    console.log( 'ends at the same time exEnd' );
-                }
-
-
-
-                if( curDurationAddedToStartFromMidnight > exStartInMinutesFromMidnight ){
-                    console.log( 'ends after exStart' );
-                }
                 if( curDurationAddedToStartFromMidnight < exStartInMinutesFromMidnight ){
                     console.log( 'ends before exStart' );
+                    endsBeforeExStart = true;
                 }
+                if( curDurationAddedToStartFromMidnight > exStartInMinutesFromMidnight ){
+                    console.log( 'ends after exStart' );
+                    endsAfterExStart = true;
+                }
+
                 if( curDurationAddedToStartFromMidnight === exStartInMinutesFromMidnight ){
                     console.log( 'ends at the same time as exStart' );
+                    endsAtTheSameTimeAsExStart = true;
                 }
 
 
+
+                if( curDurationAddedToStartFromMidnight < exDurationAddedToStartFromMidnight ){
+                    console.log( 'ends before exEnd' );
+                    endsBeforeExEnd = true;
+                }
+                if( curDurationAddedToStartFromMidnight > exDurationAddedToStartFromMidnight ){
+                   console.log( 'ends after exEnd' );
+                    endsAfterExEnd = true;
+                }
+
+                if( curDurationAddedToStartFromMidnight === exDurationAddedToStartFromMidnight ){
+                    console.log( 'ends at the same time exEnd' );
+                    endsAtTheSameTimeAsExEnd = true;
+                }
+
+
+
+                if( startsBeforeExStart && endsAfterExStart ){
+                    console.log( 'starts before exStart and ends after exStart -- cannot book' )
+                    passesCheck.passes = false;
+                    passesCheck.errorMsg = errors.busy;
+                }
+
+                if( startsAfterExStart && startsBeforeExEnd ){
+                    console.log( 'starts after exStart and starts before exEnd -- cannot book' );
+                    passesCheck.passes = false;
+                    passesCheck.errorMsg = errors.busy;
+                }
 
             }
         } // - end of bookings interference check
-
 
         if (!passesCheck.passes) {
             res.send(passesCheck.errorMsg);
             return;
         }
 
-
-        return;
-
-        callback();
-
+        callback( room, date, start, end, user, company, comments );
     });
 
 }

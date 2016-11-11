@@ -93,13 +93,11 @@ class Room extends React.Component{
             }
 
         });
-
         //calculate the percentage of time filled for each hour in the hours object
         $.each( hours, ( i, hour )=>{
             let percent = ( hour.timeFilled/60 )*100;
             hour.percentage = percent + '%';
         });
-
         //console.log( 'HOURS OBJECT', hours );
         return hours;
     }
@@ -154,6 +152,54 @@ class Room extends React.Component{
             date += d[2];
         }
 
+        let id = 0;
+
+        let bookingSpans = {};
+
+        $.each( bookingsByHours, ( key, bookings )=>{
+
+            bookingSpans[key] = bookings.bookings.map( ( book )=>{
+
+                let width = '10',
+                    left = '10';
+
+                let split1 = book.end.split(":"),
+                    endMins = split1[1],
+                    endHour = split1[0],
+                    split2 = book.start.split(":"),
+                    startMins = split2[1],
+                    startHour = split2[0];
+
+                if( startHour === endHour){
+                    let mins = parseInt( endMins ) - parseInt( startMins );
+                    let perc = (mins/60)*100;
+                    width = perc;
+                    left = startMins;
+                }
+
+                if( (parseInt( endHour ) - parseInt( startHour )) === 1 ){
+
+                    if( parseInt( endMins ) === 0 ){
+                        let mins = 60 - parseInt( startMins );
+                        console.log( 'startMins', startMins, mins )
+
+                        width = mins;
+                        left = startMins;
+                    }
+                }
+
+                console.log( width, left )
+
+                return (<span key={id++} className="expand duration" style={{ width: width + 'px', position: 'absolute', left: left + 'px' }}></span>);
+
+            });
+        });
+
+
+        console.log( 'bookingSpans', bookingSpans )
+
+
+        console.log( bookingsByHours['10'].bookings )
         return (
            <div className="col-sm-6 room">
                <div className="row">
@@ -187,16 +233,22 @@ class Room extends React.Component{
                                 <ul id="skill">
                                     <li>
                                         <div className="hr10">
-                                            <span data-hour="10" className="expand duration" style={ { width: bookingsByHours["10"].percentage } } onClick={ this.handleBookingClick }></span>
+                                            <span data-hour="10" className="expand duration" style={ { width: '100px', background: 'red' } } onClick={ this.handleBookingClick }>
+                                            { bookingSpans["10"] }
+                                            </span>
                                         </div>
 
                                         <div className="hr10-2" >
-                                            <span data-hour="11" className="expand duration" style={ { width: bookingsByHours["11"].percentage } }  onClick={ this.handleBookingClick }></span>
+                                            <span data-hour="11" className="expand duration" style={ { width: '100px', background: 'red' } } onClick={ this.handleBookingClick }>
+                                            { bookingSpans["11"] }
+                                            </span>
                                         </div>
 
 
                                         <div className="hr10-3" >
-                                            <span data-hour="12" className="expand duration" style={ { width: bookingsByHours["12"].percentage } }  onClick={ this.handleBookingClick }></span>
+                                            <span data-hour="12" className="expand duration" style={ { width: '100px', background: 'red' } } onClick={ this.handleBookingClick }>
+                                            { bookingSpans["12"] }
+                                            </span>
                                         </div>
 s                                    </li>
 
