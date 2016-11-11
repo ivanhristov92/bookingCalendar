@@ -1,0 +1,141 @@
+
+body{
+    margin: 0;
+}
+
+div[name=background], .forgotPasswordForm{
+    padding-top: 10em;
+}
+
+.inputField{
+    margin: 1em 0;
+}
+
+.room {
+    height: 25em;
+    border: 1px solid blue;
+    background: url('/src/client/images/blue.jpg');
+}
+
+.hoursTable{
+    height: 20em;
+    border: 1px solid black;
+    background: url('/src/client/images/pattern_40.gif');
+}
+
+.hourLine{
+    border-top: 1px solid black;
+    margin-top: 5em;
+}
+
+
+
+.myProfilePage .container.pageContent{
+    padding-top: 5em;
+}
+
+
+.myProfilePage .details{
+
+margin-top: 5em;
+
+}
+
+
+.myProfilePage .details .row{
+    margin-top: 1em;
+}
+
+.myProfilePage .row.submitChangesButton{
+
+    margin-top: 5em;
+
+}
+
+/* Animation for and line hours */
+
+
+.content {
+    width: 278px;
+    margin: 0;
+    position: relative;
+    float: left;
+    font-size: 12px;
+    line-height: 2em;
+    padding: 30px 0 30px;
+}
+
+.col {
+    width: 280px;
+}
+
+#skill {
+    list-style: none;
+    padding-top: 30px;
+}
+
+#skill li {
+    margin-bottom: 70px;
+    background: #000;
+    height: 5px;
+    border-radius: 3px;
+    border-left: 1px solid #111;
+    border-top: 1px solid #111;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    width: 300px;
+}
+
+#skill li em {
+    position: relative;
+    top: -30px;
+}
+
+.expand {
+    height: 1px;
+    margin: 2px 0;
+    background: #2187e7;
+    position: absolute;
+    box-shadow: 0px 0px 10px 1px rgba(0,198,255,0.4);
+}
+
+.expand:hover{
+    height:10px;
+    border-radius: 0 0 20% 20%;
+}
+
+.hr10, .hr10-2, .hr10-3,
+.hr13, .hr13-2, .hr13-3,
+.hr16, .hr16-2, .hr16-3{
+
+    position: relative;
+    width: 100px;
+}
+
+
+.hr10-2,
+.hr13-2,
+.hr16-2 {
+    margin-left: 100px;
+}
+
+.hr10-3,
+.hr13-3,
+.hr16-3
+{
+    margin-left: 200px;
+}
+
+.duration{
+    border-left: 3px solid white;
+}
+
+
+.comments {
+    margin-top: 2em;
+}
+
+
+.bookARoomPage, .myProfilePage{
+    margin-top: -10em;
+}
