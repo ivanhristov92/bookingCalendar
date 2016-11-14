@@ -18,14 +18,20 @@ div[name=background], .forgotPasswordForm{
 }
 
 .hoursTable{
-    height: 20em;
+    height: 53em;
     border: 1px solid black;
     background: url('/src/client/images/pattern_40.gif');
+    color: white;
 }
 
 .hourLine{
     border-top: 1px solid black;
     margin-top: 5em;
+}
+
+.hourLabel{
+    position: absolute;
+    top: -23px;
 }
 
 
@@ -84,6 +90,7 @@ margin-top: 5em;
     border-right: 1px solid #333;
     border-bottom: 1px solid #333;
     width: 300px;
+    position: relative;
 }
 
 #skill li em {
@@ -91,15 +98,41 @@ margin-top: 5em;
     top: -30px;
 }
 
-.expand {
+
+.expandParent {
     height: 1px;
     margin: 2px 0;
     background: #2187e7;
     position: absolute;
     box-shadow: 0px 0px 10px 1px rgba(0,198,255,0.4);
+    width: 300px;
 }
 
-.expand:hover{
+.expand, .expandChild {
+    height: 1px;
+    margin: 2px 0;
+    background: #2187e7;
+    position: absolute;
+    /*box-shadow: 0px 0px 10px 1px rgba(0,198,255,0.4);*/
+    width: 300px;
+    background: none;
+}
+
+.expand {
+    top: -10px;
+    height: 20px;
+}
+
+.expandChild{
+    width: 100%;
+    background: #2187e7;
+    position: absolute;
+    top: 5px;
+    height: 4px;
+    border-left: 1px solid white;
+}
+
+.expand:hover .expandChild, .expand.hover .expandChild{
     height:10px;
     border-radius: 0 0 20% 20%;
 }
@@ -109,25 +142,25 @@ margin-top: 5em;
 .hr16, .hr16-2, .hr16-3{
 
     position: relative;
-    width: 100px;
+    width: 300px;
 }
 
 
 .hr10-2,
 .hr13-2,
 .hr16-2 {
-    margin-left: 100px;
+    /*margin-left: 100px;*/
 }
 
 .hr10-3,
 .hr13-3,
 .hr16-3
 {
-    margin-left: 200px;
+    /*margin-left: 200px;*/
 }
 
 .duration{
-    border-left: 3px solid white;
+
 }
 
 
