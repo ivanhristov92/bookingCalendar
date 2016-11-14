@@ -21,6 +21,10 @@ function createBooking( req, res ){
 
     checkIfTimeIsFree( req, res, function( room, date, start, end, user, company, comments ){
 
+        var allInfo = checkIfAllInfoIsProvided( req, res, [room, date, start, end, company ] );
+
+        if(!allInfo){ return res.send( 'Some parameter is missing. Please provide all relevant information!' ) }
+
         var booking = new Booking({ room: room, date: date, start: start, end: end, user: user, company: company, comments: comments });
         console.log( 'booking', booking );
         booking.save( function( err ){
@@ -122,7 +126,8 @@ function checkIfTimeIsFree( req, res, callback ){
 
 
     var errors = {
-        busy: 'The time you want to book interferes with an existing booking!'
+        busy: 'The time you want to book interferes with an existing booking!',
+        outsideTimeFrame: 'The time you want to book starts outside the allowed booking timeframe!'
     }
 
 
@@ -169,7 +174,9 @@ function checkIfTimeIsFree( req, res, callback ){
 
             endsBeforeExEnd,
             endsAfterExEnd,
-            endsAtTheSameTimeAsExEnd;
+            endsAtTheSameTimeAsExEnd,
+
+            startsBeforeTen;
 
 
 
@@ -268,8 +275,16 @@ function checkIfTimeIsFree( req, res, callback ){
                     passesCheck.errorMsg = errors.busy;
                 }
 
+
+
             }
         } // - end of bookings interference check
+
+        if( curStartHour < 10 || curStartHour > 19 ){
+            console.log( "starts outside of the allowed time-frame - cannot book!" );
+            passesCheck.passes = false;
+            passesCheck.errorMsg = errors.outsideTimeFrame;
+        }
 
         if (!passesCheck.passes) {
             res.send(passesCheck.errorMsg);
@@ -278,5 +293,24 @@ function checkIfTimeIsFree( req, res, callback ){
 
         callback( room, date, start, end, user, company, comments );
     });
+
+}
+
+
+
+
+
+function checkIfAllInfoIsProvided( req, res, [ args ] ){
+
+    var args = arguments[2];
+    var passes = true;
+
+    for( var arg in args ){
+        if( !args[arg] ){
+            passes = false;
+        }
+    }
+
+return passes;
 
 }
