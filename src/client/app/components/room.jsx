@@ -116,14 +116,13 @@ class Room extends React.Component{
 
     handleBookingClick( e ){
         let hour = $( e.currentTarget ).closest( '.expandParent' ).data( 'hour' );
-        let spans = $( e.currentTarget ).closest( '.expandParent' ).find( 'span' );
+        let spans = $( e.currentTarget ).closest( '.expandParent' ).find( 'span.expand.duration' );
         let index = spans.index( $( e.currentTarget ) )
 
 
         let state = $.extend( {}, this.state );
         let selectedBookings = this.bookingsByHours[hour.toString()];
             selectedBookings = [selectedBookings.bookings[index]];
-        console.log( 'selectedBookings', selectedBookings );
         state.showBookings = selectedBookings;
         this.setState( state )
     }
@@ -132,9 +131,7 @@ class Room extends React.Component{
         console.log( data );
         this.context.bookingServices.createBooking( data )
         .then( ( response )=>{
-
                 console.log( 'response from createBooking service', response );
-
             });
     }
 
@@ -167,26 +164,23 @@ class Room extends React.Component{
 
 
     render() {
+
         let bookingsByHours = this.fileterBookingsByHours(this.props.bookings);
         this.bookingsByHours = bookingsByHours;
+        let d = this.props.date,
+            date ='',
+            id = 0,
+            bookingSpans = {};
 
-        let d = this.props.date;
-        let date ='';
-        //
         if( d !== '' ){
             date += ( d[0] < 10 ) ? ( '0' + d[0] + '/' ) : ( d[0] + '/' );
             date +=  ( d[1] < 10 ) ? ( '0' + d[1] + '/' ) : ( d[1] + '/' );
             date += d[2];
         }
 
-        let id = 0;
-
-        let bookingSpans = {};
-
         console.log( 'bookingsByHours',  bookingsByHours)
 
         $.each( bookingsByHours, ( key, bookings )=>{
-
             bookingSpans[key] = bookings.bookings.map( ( book )=>{
 
                 let width = '10',
@@ -205,69 +199,45 @@ class Room extends React.Component{
                     width = mins*5;
                     left = startMins*5;
                 }
-
                 if( endHour - startHour === 1 ){
-
                     if( endMins === 0 ){
                         let mins = 60 - startMins;
                         width = mins*5;
                         left = startMins*5;
                     } else {
-
                         if( parseInt( key ) === startHour ){
-
                             let mins = 60 - startMins;
                             width = mins*5;
                             left = startMins*5;
-
                         } else {
 
                             let mins = endMins;
                             width = mins*5;
                             left = 0;
-
                         }
-
-
                     }
                 }
-
-
                 if( endHour - startHour > 1 ){
-                    //console.log( 'book', book )
-                    //let parent = $( 'span[data-hour="'+ key +'"]' );
-                    //console.log( 'parent', parent )
-
                     let mins;
-
                     if( parseInt( key ) === startHour ){
                         //console.log( 'first hour', key )
-
                         mins = ( 60-startMins );
                         left = startMins;
                         //console.log( 'mins', mins )
-
                     } else if( parseInt( key ) === endHour ){
                         //console.log( 'last hour', key )
-
                         mins = endMins;
                         left = 0;
                         //console.log( 'mins', mins )
                     } else {
                         //console.log( 'middle hour', key )
-
-
                         mins = 60;
                         left = 0;
                         //console.log( 'mins', mins )
                     }
-
-
                     width = mins*5;
                     left = left*5;
-
                 }
-
 
                 //console.log( 'book', 'key', key, book );
                 //console.log( 'width', width/5 , 'left', left/5)
