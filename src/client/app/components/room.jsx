@@ -4,6 +4,7 @@ import React from 'react';
 import $ from 'jquery';
 import { Button } from 'react-bootstrap';
 import ModalHRSelecttion from './modal-hour-selection.jsx';
+import ModalDelete from './modal-delete.jsx';
 
 import HourLine from './hour-line.jsx';
 import BookingRef from './../components/booking-ref.jsx';
@@ -16,7 +17,8 @@ class Room extends React.Component{
         this.state={
             showModal: false,
             showBookings: [],
-            bookingsByHours: []
+            bookingsByHours: [],
+            showDeleteModal: false
         }
 
         this.openModal = this.openModal.bind( this );
@@ -26,6 +28,9 @@ class Room extends React.Component{
         this.handleBookingSave = this.handleBookingSave.bind( this );
         this.handleMouseover = this.handleMouseover.bind( this );
         this.handleMouseout = this.handleMouseout.bind( this );
+        this.handleDeleteModalOpen = this.handleDeleteModalOpen.bind( this );
+        this.handleDeleteModalClose = this.handleDeleteModalClose.bind( this );
+        this.handleDelete = this.handleDelete.bind( this );
     }
 
     fileterBookingsByHours( bookingsArray ){
@@ -107,11 +112,15 @@ class Room extends React.Component{
 
 
     openModal(){
-        this.setState( {showModal: true} );
+        let state = $.extend( {}, this.state );
+        state.showModal = true;
+        this.setState( state);
     }
 
     closeModal(){
-        this.setState( {showModal: false} );
+        let state = $.extend( {}, this.state );
+        state.showModal = false;
+        this.setState( state);
     }
 
     handleBookingClick( e ){
@@ -130,9 +139,25 @@ class Room extends React.Component{
     handleBookingSave( data ){
         console.log( data );
         this.context.bookingServices.createBooking( data )
-        .then( ( response )=>{
-                console.log( 'response from createBooking service', response );
-            });
+        .then( ( response )=> {
+
+            let parsedResponse;
+            try {
+                parsedResponse= JSON.parse( response );
+            }
+            catch(err) {
+                parsedResponse = response;
+            }
+
+            if( parsedResponse.object ){
+
+                console.log('response from createBooking service',  parsedResponse.message );
+                this.closeModal();
+                this.props.updateRoom( parsedResponse.object );
+            } else {
+                console.log('String: response from createBooking service',  parsedResponse );
+            }
+        });
     }
 
     handleMouseover( e ){
@@ -153,6 +178,31 @@ class Room extends React.Component{
         spans.each( ( i, span )=>{
             $( span ).removeClass( 'hover' );
         });
+    }
+
+    handleDeleteModalOpen( e ){
+        let state = $.extend( {}, this.state );
+        state.showDeleteModal = true;
+        this.setState( state );
+    }
+
+    handleDeleteModalClose( e ){
+        console.log( 'closing delete modal baby' );
+        let state = $.extend({}, this.state);
+        state.showDeleteModal = false;
+        this.setState( state );
+    }
+
+    handleDelete( e ){
+        console.log( 'deleting baby' );
+        let currentBooking = this.state.showBookings[0];
+        console.log( currentBooking );
+        this.context.bookingServices.deleteBooking( currentBooking )
+        .then( ( response )=>{
+                console.log( 'response from deleteBooking', response );
+                this.handleDeleteModalClose();
+                this.props.refreshRoom(currentBooking._id);
+            });
     }
 
 
@@ -376,9 +426,10 @@ s                                    </li>
                         </div>
                         <div className="col-sm-4 col-sm-offset-2">
 
-                            <BookingRef bookings={ this.state.showBookings }/>
+                            <BookingRef bookings={ this.state.showBookings } onOpenDeleteModal={ this.handleDeleteModalOpen }/>
 
                         </div>
+                        <ModalDelete shouldShow={ this.state.showDeleteModal } onClose={ this.handleDeleteModalClose } onDelete = { this.handleDelete }></ModalDelete>
 
                     </div>
                </div>

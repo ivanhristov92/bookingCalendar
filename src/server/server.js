@@ -60,6 +60,9 @@ app.post('/api/users/edit', middleware.requireAuth, function( req, res ){
 app.post('/api/bookings/create', function( req, res ){
     bookingActions.createBooking( req,res );
 });
+app.post('/api/bookings/delete', function( req, res ){
+    bookingActions.deleteBooking( req,res );
+});
 app.post('/api/bookings', function( req, res ){
     bookingActions.getAllBookings( req,res );
 });

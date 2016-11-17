@@ -27,6 +27,8 @@ class BookARoom extends React.Component{
         this.handleLogoutUser = this.handleLogoutUser.bind( this );
         this.showRoom = this.showRoom.bind( this );
         this.handleDateChange = this.handleDateChange.bind( this );
+        this.refreshRoom = this.refreshRoom.bind( this );
+        this.updateRoom = this.updateRoom.bind( this );
     }
 
     getBookingsForDate( dateArray ){
@@ -41,15 +43,12 @@ class BookARoom extends React.Component{
     filterBookingsByRoom() {
 
         //if( this.state.bookings.length === 0 ) return;
-
         let rooms = {
             room1: [],
             room2: []
         };
-
         let bookings = this.state.bookings;
         //console.log( 'state from filterBookingsByRoom', bookings[0] );
-
         $.each( bookings, ( i, booking )=>{
 
             if( booking.room == "1" ){
@@ -59,7 +58,6 @@ class BookARoom extends React.Component{
             }
 
         });
-
         return rooms;
     }
 
@@ -99,6 +97,21 @@ class BookARoom extends React.Component{
         });
     }
 
+    refreshRoom( deletedBookingId ){
+        let state = $.extend({}, this.state);
+        state.bookings = this.state.bookings.filter(( book )=>{
+            console.log( 'book from filtering', book )
+            return book._id !== deletedBookingId;
+        });
+        this.setState( state );
+    }
+
+    updateRoom( bookingResponse ){
+        let state = $.extend({},this.state);
+        state.bookings.push( bookingResponse );
+        this.setState( state );
+    }
+
 
     render() {
 
@@ -111,17 +124,17 @@ class BookARoom extends React.Component{
             switch( this.state.show ){
 
                 case '1' || 1:
-                    return (<Room roomName="Room 1" date={ date } bookings={ bookings.room1 }></Room>);
+                    return (<Room roomName="Room 1" date={ date } bookings={ bookings.room1 } refreshRoom={ this.refreshRoom } updateRoom={ this.updateRoom }></Room>);
                 break;
 
                 case '2'|| 2:
-                    return (<Room roomName="Room 2" date={date} bookings={ bookings.room2 }></Room>);
+                    return (<Room roomName="Room 2" date={date} bookings={ bookings.room2 } refreshRoom={ this.refreshRoom } updateRoom={ this.updateRoom }></Room>);
                     break;
 
                 case '3' || 3:
                     return [
-                        <Room key="1" roomName="Room 1" date={date} bookings={ bookings.room1 }></Room>,
-                        <Room key="2" roomName="Room 2" date={date} bookings={ bookings.room2 }></Room>];
+                        <Room key="1" roomName="Room 1" date={date} bookings={ bookings.room1 } refreshRoom={ this.refreshRoom } updateRoom={ this.updateRoom }></Room>,
+                        <Room key="2" roomName="Room 2" date={date} bookings={ bookings.room2 } refreshRoom={ this.refreshRoom } updateRoom={ this.updateRoom }></Room>];
                     break;
 
 

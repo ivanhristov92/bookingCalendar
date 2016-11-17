@@ -49,6 +49,10 @@ class BookingRef extends React.Component{
                         <div className="col-sm-12 comments">
                             Comments: <span>Some comments about this booking</span>
                         </div>
+
+                        <div className="col-sm-12 text-right">
+                            <button className="btn btn-default" onClick={ this.props.onOpenDeleteModal }>delete</button>
+                        </div>
                     </div>
                 </div>
             );
@@ -56,9 +60,7 @@ class BookingRef extends React.Component{
 
         return (
             <div className="row">
-
                 { bookings }
-
             </div>
         );
     }

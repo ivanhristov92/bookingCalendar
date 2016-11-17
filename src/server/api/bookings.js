@@ -29,15 +29,14 @@ function createBooking( req, res ){
         console.log( 'booking', booking );
         booking.save( function( err ){
             if( err ) throw err;
-            res.send( 'booking should have been saved' );
+            var response = {
+                message: 'booking should have been saved',
+                object: booking
+            }
+            res.send( JSON.stringify( response ) );
         });
 
     })
-
-
-
-
-
 }
 exports.createBooking = createBooking;
 
@@ -76,6 +75,32 @@ exports.getAllBookings = getAllBookings;
 
 
 
+
+
+
+function deleteBooking( req, res ){
+
+
+
+    console.log( 'req.body from deleteBooking', req.body );
+    console.log( 'req.body._id', req.body._id );
+
+    Booking.remove({ _id: req.body._id }, function( err, booking ) {
+        if ( err ){ throw err };
+
+        res.send( "The booking you selected should have been deleted" );
+
+    });
+
+
+
+}
+exports.deleteBooking = deleteBooking;
+
+
+
+
+
 function getBooking( req, res ){
     //Code here...
 }
@@ -90,10 +115,7 @@ exports.editBooking = editBooking;
 
 
 
-function deleteBooking( req, res ){
-    //Code here...
-}
-exports.deleteBooking = deleteBooking;
+
 
 
 
@@ -183,6 +205,29 @@ function checkIfTimeIsFree( req, res, callback ){
         for ( var i = 0; i < length; i++ ) {
             var exBooking = existingBookings[i];
             if (exBooking.room == room) {
+
+
+                    startsBeforeExStart = false;
+                    startsAfterExStart = false;
+                    startsAtTheSameTimeAsExStart = false;
+
+                    startsBeforeExEnd = false;
+                    startsAfterExEnd = false;
+                    startsAtTheSameTimeAsExEnd = false;
+
+                    endsBeforeExStart = false;
+                    endsAfterExStart = false;
+                    endsAtTheSameTimeAsExStart = false;
+
+                    endsBeforeExEnd = false;
+                    endsAfterExEnd = false;
+                    endsAtTheSameTimeAsExEnd = false;
+
+                    startsBeforeTen = false;
+
+
+
+
                 var exStartTime = exBooking.start,
                     split1 = exStartTime.split(":"),
                     exStartHour = parseInt(split1[0]),
