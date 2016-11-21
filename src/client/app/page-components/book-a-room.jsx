@@ -3,6 +3,7 @@
 import React from 'react';
 
 import Menu from './../components/menu.jsx';
+import Footer from './../components/footer.jsx';
 import Tabs from './../components/tabs.jsx';
 import Calendar from './../components/calendar.jsx';
 import Room from './../components/room.jsx';
@@ -144,23 +145,25 @@ class BookARoom extends React.Component{
         let rooms = getRooms();
         console.log( 'bookings from state', this.state.bookings );
         return (
-            <div name="" className="row bookARoomPage">
-                <div className="col-sm-12">
-                    <Menu logout={ this.handleLogoutUser }></Menu>
-                </div>
-
-                <div className="col-sm-3">
-                    <Calendar onSelect={ this.handleDateChange } selectedDate={ this.state.calendarDate } ></Calendar>
-                </div>
-                <div className="col-sm-9">
-                    <Tabs page={ this.state.show } onRoomChange={ this.showRoom }></Tabs>
-                    <div className="row">
-                        { rooms }
+            <div>
+                <div name="" className="row bookARoomPage">
+                    <div className="col-sm-12">
+                        <Menu logout={ this.handleLogoutUser }></Menu>
                     </div>
+
+                    <div className="col-sm-3 calendarColumn">
+                        <Calendar onSelect={ this.handleDateChange } selectedDate={ this.state.calendarDate } ></Calendar>
+                    </div>
+                    <div className="col-sm-9">
+                        <Tabs page={ this.state.show } onRoomChange={ this.showRoom }></Tabs>
+                        <div className="row">
+                            { rooms }
+                        </div>
+                    </div>
+
                 </div>
-
+                <Footer></Footer>
             </div>
-
         );
     }
 

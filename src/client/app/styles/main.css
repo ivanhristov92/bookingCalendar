@@ -7,21 +7,37 @@ div[name=background], .forgotPasswordForm{
     padding-top: 10em;
 }
 
+.nav.nav-tabs {
+    border-bottom: none;
+}
+
+.bookARoomPage .container {
+    margin-left: 0;
+    width: 100%;
+}
+
+
 .inputField{
     margin: 1em 0;
 }
 
 .room {
     height: 25em;
-    border: 1px solid blue;
     background: url('/src/client/images/blue.jpg');
+    color: lightskyblue;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 3px;
 }
 
 .hoursTable{
     height: 53em;
-    border: 1px solid black;
-    background: url('/src/client/images/pattern_40.gif');
-    color: white;
+    /*background: url('/src/client/images/pattern_40.gif');*/
+    background: #f5f5f5;
+    /*color: white;*/
+    color: rgb(51, 51, 51);
+    height: 400px;
+    overflow: auto;
+    border-radius: 3px;
 }
 
 .hourLine{
@@ -62,7 +78,6 @@ margin-top: 5em;
 
 
 .content {
-    width: 278px;
     margin: 0;
     position: relative;
     float: left;
@@ -72,23 +87,23 @@ margin-top: 5em;
 }
 
 .col {
-    width: 280px;
 }
 
 #skill {
     list-style: none;
     padding-top: 30px;
+    padding-left:0;
 }
 
 #skill li {
     margin-bottom: 70px;
-    background: #000;
+    /*background: #000;*/
     height: 5px;
     border-radius: 3px;
-    border-left: 1px solid #111;
-    border-top: 1px solid #111;
-    border-right: 1px solid #333;
-    border-bottom: 1px solid #333;
+    /*border-left: 1px solid #111;*/
+    /*border-top: 1px solid #111;*/
+    /*border-right: 1px solid #333;*/
+    /*border-bottom: 1px solid #333;*/
     width: 300px;
     position: relative;
 }
@@ -102,9 +117,11 @@ margin-top: 5em;
 .expandParent {
     height: 1px;
     margin: 2px 0;
-    background: #2187e7;
+    /*background: #2187e7;*/
+    background: white;
     position: absolute;
-    box-shadow: 0px 0px 10px 1px rgba(0,198,255,0.4);
+    /*box-shadow: 0px 0px 10px 1px rgba(0,198,255,0.4);*/
+    /*box-shadow: 0px 0px 10px 1px white;*/
     width: 300px;
 }
 
@@ -118,23 +135,39 @@ margin-top: 5em;
     background: none;
 }
 
+.expandChild.quikfox{
+    background: #FF9900
+}
+
+.expandChild.stamford{
+    background-color: rgb(85, 159, 255);
+}
+
 .expand {
     top: -10px;
     height: 20px;
 }
 
+.expandParent.durationParent{
+    /*background-color: rgb(85, 159, 255);*/
+    background-color: white;
+    height: 3px;
+}
+
 .expandChild{
     width: 100%;
-    background: #2187e7;
+    /*background: #2187e7;*/
     position: absolute;
     top: 5px;
     height: 4px;
     border-left: 1px solid white;
+    background-color: rgb(85, 159, 255);
+    border-radius: 3px;
 }
 
 .expand:hover .expandChild, .expand.hover .expandChild{
     height:10px;
-    border-radius: 0 0 20% 20%;
+    border-radius: 3px;
 }
 
 .hr10, .hr10-2, .hr10-3,
@@ -168,7 +201,92 @@ margin-top: 5em;
     margin-top: 2em;
 }
 
+.bookBtnCol button{
+    font-weight: 500;
+    background: none;
+    border-color: white;
+}
+
+.bookBtnCol button:hover{
+    background-color: rgba(56, 87, 138, 0.941176);
+}
+
 
 .bookARoomPage, .myProfilePage{
     margin-top: -10em;
+    padding-right: 1em;
+}
+
+.bookARoomPage > .col-sm-12{
+    padding-right: 0;
+}
+
+.bookARoomPage{
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+
+/*Calendar*/
+
+
+.ReactVirtualized__Grid.ReactVirtualized__List.Cal__List__root{
+    border-radius: 3px;
+}
+
+.calendarColumn{
+    margin-top: 43px;
+}
+
+
+.calendarColumn .Cal__Container__root{
+    width: 100% !important;
+}
+
+.calendarColumn>div{
+    width: 100%;
+}
+
+.roomNumberCol{
+    color: white;
+    letter-spacing: 2px;
+}
+
+.roomDateRow{
+    font-weight: 500;
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+.bookingRefRow{
+    margin-top: 3em;
+}
+
+.bookingHoursRow{
+    font-weight: bolder;
+    font-size: 2em;
+}
+
+.deleteBtnRow{
+    margin-top: 1em;
+}
+
+.deleteBtnRow button{
+    background: none;
+    color: white;
+    font-weight: 400;
+}
+
+
+.footer{
+    bottom: 0;
+    /*background-color: rgb(68, 138, 255);*/
+    color: rgb(255, 255, 255);
+    width: 100%;
+    left: 0;
+    height: 2em;
+    margin-top: 5em;
+    border-radius: 3px;
+    color: white;
+    font-weight: 400;
+    background-color: darkgrey;
 }

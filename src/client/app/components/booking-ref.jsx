@@ -30,29 +30,37 @@ class BookingRef extends React.Component{
 
                 <div key={id++} className="col-sm-12">
                     <div className="row">
-                        <div className="col-sm-12">
+                        <div className="col-sm-2">
                             <img height="100px" src="/src/client/images/avatar.png"/>
                         </div>
 
-                        <div className="col-sm-12">
-                            Name: <span>{ booking.username }</span>
+                        <div className="col-sm-10">
+                            <div className="row">
+
+                                <div className="col-sm-12">
+                                    Name: <span>{ booking.username }</span>
+                                </div>
+
+                                <div className="col-sm-12">
+                                    Company: <span>{ booking.company }</span>
+                                </div>
+
+                                <div className="col-sm-12 bookingHoursRow">
+                                    { booking.start + " - " + booking.end }
+                                </div>
+
+                                <div className="col-sm-12 comments">
+                                    Comments: <span>Some comments about this booking</span>
+                                </div>
+
+                                <div className="col-sm-12 text-right deleteBtnRow">
+                                    <button className="btn btn-default" onClick={ this.props.onOpenDeleteModal }>delete</button>
+                                </div>
+
+                            </div>
                         </div>
 
-                        <div className="col-sm-12">
-                            Company: <span>{ booking.company }</span>
-                        </div>
 
-                        <div className="col-sm-12">
-                            { booking.start + " - " + booking.end }
-                        </div>
-
-                        <div className="col-sm-12 comments">
-                            Comments: <span>Some comments about this booking</span>
-                        </div>
-
-                        <div className="col-sm-12 text-right">
-                            <button className="btn btn-default" onClick={ this.props.onOpenDeleteModal }>delete</button>
-                        </div>
                     </div>
                 </div>
             );

@@ -17,8 +17,15 @@ var middleware = require( './api/middleware.js' );
 
 
 
+/** Pre-functions/ App configuration */
 
-/** Pre-functions */
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -27,7 +34,7 @@ app.use(bodyParser.urlencoded({
 }));
 const cookieParser = require( 'cookie-parser' );
 app.use( cookieParser());
-
+app.use(allowCrossDomain);
 
 
 
@@ -105,17 +112,23 @@ app.get('/src/client/images/:image', function(req, res){
 
 
 connect()
-    .on('error', console.log)
+    .on('error', function(err){ throw err; })
     .on('disconnected', connect)
     .once('open', listen);
 //--------------------------------------------------------------------------------
 function listen () {
     //if (app.get('env') === 'test') return;
-    app.listen( 3000 );
-    console.log('Express app started on port ' + 3000);
+    //var port = process.env.PORT || 3210;
+
+    app.listen( 4000, function( err ){
+        if(err) throw err;
+        console.log('Express app started on port ' + 4000);
+    });
 }
 function connect () {
     //var options = { server: { socketOptions: { keepAlive: 1 } } };
-    return mongoose.connect( 'mongodb://localhost:27017/roomBooking' ).connection;
+    //var connection = mongoose.connect( 'mongodb://localhost.localdomain:27017/roomBooking' ).connection;
+    var connection = mongoose.connect( 'mongodb://localhost:27017/roomBooking' ).connection;
+    return connection;
 }
 //--------------------------------------------------------------------------------

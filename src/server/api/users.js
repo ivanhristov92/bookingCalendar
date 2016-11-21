@@ -25,8 +25,9 @@ function login( req, res ){
     var username = req.body.username,
         password = req.body.password;
 
-    User.findOne({ 'username': username }, function ( err, person ) {
+    User.findOne({ "username": username }, function ( err, person ) {
         if ( err ) throw err;
+
         if( !person ){
             res.send( 'Wrong credentials!' );
         } else {
@@ -138,22 +139,78 @@ exports.getUsers = getUsers;
 
 
 function editUser( req, res ){
-    let id = req.cookies.bookingUser,
-        username = req.body.username,
-        email = req.body.email,
-        password = req.body.newPassword;
+    var id = req.cookies.bookingUser,
+        newUsername = req.body.username,
+        newEmail = req.body.email,
+        password = req.body.oldPassword,
+        newPassword = req.body.newPassword;
 
-    console.log( req.body )
-    User.update( { _id: id }, {
-        username: username,
-        email: email,
-        password: password
-    }, function( err, numberAffected, rawResponse ) {
-        //handle it
-        if( err ) throw err;
-        console.log( numberAffected );
-        res.send( 'user should now have been updated!' );
-    })
+
+
+
+    //check if there is any change
+
+    if( !newUsername && !newEmail && !newPassword ){
+        console.log( 'no user change requested' );
+        return res.send( 'no user change requested' );
+    }
+
+
+
+
+
+    User.find( {_id: id}, function( err, user ){
+        if(err) throw err;
+        if(!user){
+            res.send( 'no user found' );
+            return console.log('no user found with an id of:', id);
+        }
+
+        var user = user[0];
+        console.log( user, password )
+        var passMatch = user.password === password;
+
+
+        if( newPassword !== "" && !passMatch ){
+            console.log( 'wrong password' );
+            return res.send('wrong password');
+        }
+
+
+        console.log( user );
+
+        var updatedPassword,
+            updatedUsername,
+            updatedEmail,
+            updatedCompany;
+
+
+
+        updatedPassword = newPassword ? newPassword : user.password;
+        updatedUsername = newUsername ? newUsername : user.username;
+        updatedEmail = newEmail ? newEmail : user.email;
+        updatedCompany = user.company;
+
+
+
+
+
+        console.log( updatedPassword, updatedUsername, updatedEmail, updatedCompany );
+        return res.send("aaa");
+
+        //User.update( { _id: id }, {
+        //    username: updatedUsername,
+        //    email: updatedEmail,
+        //    password: updatedPassword
+        //}, function( err, numberAffected, rawResponse ) {
+        //    //handle it
+        //    if( err ) throw err;
+        //    console.log( numberAffected );
+        //    res.send( 'user should now have been updated!' );
+        //})
+
+    });
+
 }
 exports.editUser = editUser;
 

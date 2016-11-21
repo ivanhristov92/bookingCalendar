@@ -307,6 +307,10 @@ function checkIfTimeIsFree( req, res, callback ){
                 }
 
 
+                if( startsAtTheSameTimeAsExStart ){
+                    passesCheck.passes = false;
+                    passesCheck.errorMsg = errors.busy;
+                }
 
                 if( startsBeforeExStart && endsAfterExStart ){
                     console.log( 'starts before exStart and ends after exStart -- cannot book' )
@@ -345,7 +349,7 @@ function checkIfTimeIsFree( req, res, callback ){
 
 
 
-function checkIfAllInfoIsProvided( req, res, [ args ] ){
+function checkIfAllInfoIsProvided( req, res, args ){
 
     var args = arguments[2];
     var passes = true;

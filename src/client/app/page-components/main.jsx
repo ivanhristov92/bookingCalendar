@@ -8,7 +8,8 @@ class Main extends React.Component{
 
     constructor( props ){
         super( props );
-        this.base = 'http://localhost:3000';
+        //this.base = 'http://bookingcalendar.quikfox-lab.com:4000';
+        this.base = 'http://localhost:4000';
         this.userServices = new UserServices( this.base );
         this.bookingServices = new BookingServices( this.base );
     }

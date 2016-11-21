@@ -21,7 +21,8 @@ class MyProfile extends React.Component{
             email: '',
             password: '',
             newPassword: '',
-            confirmNewPassword: ''
+            confirmNewPassword: '',
+            errorMessages:[]
         };
 
 
@@ -71,10 +72,34 @@ class MyProfile extends React.Component{
 
     handleSubmitChanges( e ){
 
+
+        if( this.state.newPassword !== "" ){
+            if( this.state.confirmNewPassword !== this.state.newPassword ){
+
+                let state = $.extend( {}, this.state );
+                state.errorMessages = [];
+                state.errorMessages.push('the two passwords do not match!!!');
+                console.log( 'the two passwords do not match!!!' );
+                this.setState( state );
+                return;
+            }
+
+
+            if( !this.state.password ){
+                let state = $.extend( {}, this.state );
+                state.errorMessages = [];
+                state.errorMessages.push('please provide the original password');
+                console.log( 'please provide the original password' );
+                this.setState( state );
+                return;
+            }
+        }
+
         this.context.userServices.editUser ({
             username: this.state.name,
             email: this.state.email,
-            newPassword: this.state.newPassword
+            newPassword: this.state.newPassword,
+            oldPassword: this.state.password
         })
         .then( ( response )=>{
                 console.log( response );
@@ -83,6 +108,13 @@ class MyProfile extends React.Component{
     }
 
     render() {
+        let id = 0;
+        let errors = this.state.errorMessages.map( ( err )=>{
+            return (
+              <p key={id++}>{ err }</p>
+            );
+        });
+
         return (
             <div name="" className="row myProfilePage">
                 <Menu logout={this.handleLogoutUser} ></Menu>
@@ -104,6 +136,9 @@ class MyProfile extends React.Component{
                             confirmNewPasswordChange={ this.handleConfirmNewPasswordChange }
                             submitChanges={ this.handleSubmitChanges }
                             />
+                        </div>
+                        <div className="col-sm-12 text-center">
+                            {errors}
                         </div>
                     </div>
                 </div>

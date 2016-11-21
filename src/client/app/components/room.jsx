@@ -292,9 +292,34 @@ class Room extends React.Component{
                 //console.log( 'book', 'key', key, book );
                 //console.log( 'width', width/5 , 'left', left/5)
 
+                let companyClass = "";
+
+                switch(book.company){
+                    case "quikfox":
+                        companyClass="quikfox";
+                        break;
+                    case "frox":
+                        companyClass = "frox";
+                        break;
+                    case "stamford":
+                        companyClass = "a";
+                        break;
+                    case "akros":
+                        companyClass = "akros";
+                        break;
+                    case "quikfoxServices":
+                        companyClass = "quikfoxServices";
+                        break;
+                    case "private":
+                        companyClass = "private";
+                        break;
+                }
+
+                let expandChildClass = "expandChild " + companyClass;
+
                 return (<span key={id++} onMouseOut={ this.handleMouseout } onMouseOver={ this.handleMouseover } data-bookingId={ bookingId } className="expand duration" style={{ position: 'absolute', width: width + 'px', left: left + 'px' }} onClick={ this.handleBookingClick }>
 
-                    <span className="expandChild" ></span>
+                    <span className= { expandChildClass } ></span>
                 </span>);
 
             });
@@ -306,12 +331,12 @@ class Room extends React.Component{
 
         return (
            <div className="col-sm-6 room">
-               <div className="row">
-                   <div className="col-sm-10">
+               <div className="row" style={{minHeight: '348px'}}>
+                   <div className="col-sm-10 roomNumberCol">
                        <h3>{ this.props.roomName }</h3>
                    </div>
 
-                   <div className="col-sm-2">
+                   <div className="col-sm-2 text-right bookBtnCol" style={{ paddingTop: '1em'}}>
                        <Button
                            bsStyle="primary"
                            bsSize="large"
@@ -319,11 +344,14 @@ class Room extends React.Component{
                            Book
                        </Button>
                    </div>
-                    <div className="col-sm-12">
+                    <div className="col-sm-12 roomDateRow">
 
                         { date }
 
                     </div>
+                   <div className="col-sm-12 bookingRefRow">
+                       <BookingRef bookings={ this.state.showBookings } onOpenDeleteModal={ this.handleDeleteModalOpen }/>
+                   </div>
                    <ModalHRSelecttion roomName={ this.props.roomName } container={ this } shouldShow={ this.state.showModal } close={ this.closeModal } date={ d } save={ this.handleBookingSave } ></ModalHRSelecttion>
 
                </div>
@@ -331,102 +359,106 @@ class Room extends React.Component{
                <div className="row">
 
                     <div className="col-sm-12 hoursTable">
-                        <div className="content col-sm-5">
-                            <div className="col">
-                                <ul id="skill">
-                                    <li>
-                                        <div className="hourLabel">10:00</div>
-                                        <div className="hr10">
-                                            <span data-hour="10" className="expandParent durationParent">
+                        <div className="row">
+
+                            <div className="col-sm-5">
+                                <div className="col">
+                                    <ul id="skill">
+                                        <li>
+                                            <div className="hourLabel">10:00</div>
+                                            <div className="hr10">
+                                                <span data-hour="10" className="expandParent durationParent">
                                             { bookingSpans["10"] }
-                                            </span>
-                                        </div>
-                                    </li>
+                                                </span>
+                                            </div>
+                                        </li>
 
-                                    <li>
-                                        <div className="hourLabel">11:00</div>
-                                        <div className="hr10-2" >
-                                            <span data-hour="11" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">11:00</div>
+                                            <div className="hr10-2" >
+                                                <span data-hour="11" className="expandParent durationParent">
                                             { bookingSpans["11"] }
-                                            </span>
-                                        </div>
-                                    </li>
+                                                </span>
+                                            </div>
+                                        </li>
 
 
-                                    <li>
-                                        <div className="hourLabel">12:00</div>
-                                        <div className="hr10-3" >
-                                            <span data-hour="12" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">12:00</div>
+                                            <div className="hr10-3" >
+                                                <span data-hour="12" className="expandParent durationParent">
                                             { bookingSpans["12"] }
-                                            </span>
-                                        </div>
-s                                    </li>
+                                                </span>
+                                            </div>
+                                            s                                    </li>
 
 
-                                    <li>
-                                        <div className="hourLabel">13:00</div>
-                                        <div className="hr13" >
-                                            <span data-hour="13" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">13:00</div>
+                                            <div className="hr13" >
+                                                <span data-hour="13" className="expandParent durationParent">
                                             { bookingSpans["13"] }
-                                            </span>
-                                        </div>
+                                                </span>
+                                            </div>
 
-                                    </li>
+                                        </li>
 
-                                    <li>
-                                        <div className="hourLabel">14:00</div>
-                                        <div className="hr13-2" >
-                                            <span data-hour="14" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">14:00</div>
+                                            <div className="hr13-2" >
+                                                <span data-hour="14" className="expandParent durationParent">
                                             { bookingSpans["14"] }
-                                            </span>
-                                        </div>
-                                    </li>
+                                                </span>
+                                            </div>
+                                        </li>
 
-                                    <li>
-                                        <div className="hourLabel">15:00</div>
-                                        <div className="hr13-3" >
-                                            <span data-hour="15" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">15:00</div>
+                                            <div className="hr13-3" >
+                                                <span data-hour="15" className="expandParent durationParent">
                                             { bookingSpans["15"] }
-                                            </span>
-                                        </div>
-                                     </li>
+                                                </span>
+                                            </div>
+                                        </li>
 
 
-                                    <li>
-                                        <div className="hourLabel">16:00</div>
-                                        <div className="hr16" >
-                                            <span data-hour="16" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">16:00</div>
+                                            <div className="hr16" >
+                                                <span data-hour="16" className="expandParent durationParent">
                                             { bookingSpans["16"] }
-                                            </span>
-                                        </div>
+                                                </span>
+                                            </div>
 
-                                    </li>
+                                        </li>
 
-                                    <li>
-                                        <div className="hourLabel">17:00</div>
-                                        <div className="hr16-2" >
-                                            <span data-hour="17" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">17:00</div>
+                                            <div className="hr16-2" >
+                                                <span data-hour="17" className="expandParent durationParent">
                                             { bookingSpans["17"] }
-                                            </span>
-                                        </div>
-                                    </li>
+                                                </span>
+                                            </div>
+                                        </li>
 
-                                    <li>
-                                        <div className="hourLabel">18:00</div>
-                                        <div className="hr16-3" >
-                                            <span data-hour="18" className="expandParent durationParent">
+                                        <li>
+                                            <div className="hourLabel">18:00</div>
+                                            <div className="hr16-3" >
+                                                <span data-hour="18" className="expandParent durationParent">
                                             { bookingSpans["18"] }
-                                            </span>
-                                        </div>
-                                    </li>
+                                                </span>
+                                            </div>
+                                        </li>
 
-                                </ul>
+                                    </ul>
 
+                                </div>
                             </div>
                         </div>
+
                         <div className="col-sm-4 col-sm-offset-2">
 
-                            <BookingRef bookings={ this.state.showBookings } onOpenDeleteModal={ this.handleDeleteModalOpen }/>
+
 
                         </div>
                         <ModalDelete shouldShow={ this.state.showDeleteModal } onClose={ this.handleDeleteModalClose } onDelete = { this.handleDelete }></ModalDelete>
