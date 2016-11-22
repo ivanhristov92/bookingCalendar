@@ -353,7 +353,6 @@ class Room extends React.Component{
                        <BookingRef bookings={ this.state.showBookings } onOpenDeleteModal={ this.handleDeleteModalOpen }/>
                    </div>
                    <ModalHRSelecttion roomName={ this.props.roomName } container={ this } shouldShow={ this.state.showModal } close={ this.closeModal } date={ d } save={ this.handleBookingSave } ></ModalHRSelecttion>
-
                </div>
 
                <div className="row">

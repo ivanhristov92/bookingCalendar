@@ -86,7 +86,16 @@ class ModalHRSelecttion extends React.Component{
         console.log( 'room', room[0] )
 
         let close = this.props.close;
+        let d = this.props.date,
+            date = "";
 
+        if( d !== '' ){
+            date = ( d[0] < 10 ) ? ( '0' + d[0] + '-' ) : ( d[0] + '-' );
+            date +=  ( d[1] < 10 ) ? ( '0' + d[1] + '-' ) : ( d[1] + '-' );
+            date += d[2];
+        }
+
+        console.log( date )
 
         return (
 
@@ -100,7 +109,7 @@ class ModalHRSelecttion extends React.Component{
 
 
                     <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title">Booking Time: Room { room[0] }</Modal.Title>
+                        <Modal.Title id="contained-modal-title">Booking Time: Room { room[0] } <span style={{ float: 'right', marginRight: '1em'}}> { date }</span></Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="row">
                         <div className="col-sm-12 text-center">

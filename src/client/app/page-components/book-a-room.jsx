@@ -9,6 +9,7 @@ import Calendar from './../components/calendar.jsx';
 import Room from './../components/room.jsx';
 import $ from 'jquery';
 import { browserHistory } from 'react-router';
+import moment from 'moment';
 
 
 class BookARoom extends React.Component{
@@ -18,7 +19,7 @@ class BookARoom extends React.Component{
 
         this.state={
             show: '1',
-            selectedDate: '',
+            selectedDate:'',
             bookings: [],
             calendarDate : ''
         }
@@ -78,6 +79,8 @@ class BookARoom extends React.Component{
 
     handleDateChange( date ){
 
+        console.log( 'date', date )
+
         let d = [date.date(), date.month() + 1, date.year()];
 
         this.getBookingsForDate( d )
@@ -97,6 +100,12 @@ class BookARoom extends React.Component{
                 this.setState( state );
         });
     }
+
+
+    componentWillMount(){
+        this.handleDateChange( moment(new Date()) );
+    }
+
 
     refreshRoom( deletedBookingId ){
         let state = $.extend({}, this.state);

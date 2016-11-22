@@ -9,6 +9,7 @@ div[name=background], .forgotPasswordForm{
 
 .nav.nav-tabs {
     border-bottom: none;
+    margin-left: -1em;
 }
 
 .bookARoomPage .container {
