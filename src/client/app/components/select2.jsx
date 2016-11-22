@@ -34,6 +34,8 @@ class MySelect extends React.Component{
                 value={ this.props.value }
                 options={ this.props.options }
                 onChange={ this.onChange }
+                children = { this.props.children }
+                optionRenderer ={ this.props.optionRenderer }
             />
         );
     }

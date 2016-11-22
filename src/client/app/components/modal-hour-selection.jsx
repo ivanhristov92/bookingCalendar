@@ -27,6 +27,7 @@ class ModalHRSelecttion extends React.Component{
         this.handleCompanyChange = this.handleCompanyChange.bind( this );
         this.handleCommentsChange = this.handleCommentsChange.bind( this );
         this.handleBookingSave = this.handleBookingSave.bind( this );
+        this.customSelectRenderer = this.customSelectRenderer.bind( this );
     }
 
     handleStartTimeSelect( hours, minutes ){
@@ -80,6 +81,36 @@ class ModalHRSelecttion extends React.Component{
     }
 
 
+     customSelectRenderer ( option ){
+
+        let backgroundColor = "";
+
+        switch( option['value'] ){
+            case "quikfox":
+                backgroundColor="orange";
+                break;
+            case "frox":
+                backgroundColor = "rgb(85, 159, 255)";
+                break;
+            case "stamford":
+                backgroundColor = "rgb(85, 159, 255)";
+                break;
+            case "akros":
+                backgroundColor = "rgb(85, 159, 255)";
+                break;
+            case "quikfoxServices":
+                backgroundColor="orange";
+                break;
+            case "private":
+                backgroundColor = "#ff6699";
+                break;
+        }
+
+        //console.log( 'option', option )
+        return (<span className="aaa" >{option['label']}<span style={{float: 'right', width: '1em', height: '1em', background: backgroundColor, borderRadius: '3px'}} ></span></span>)
+
+    }
+
     render() {
 
         let room = this.props.roomName.match(/\d/);
@@ -96,6 +127,9 @@ class ModalHRSelecttion extends React.Component{
         }
 
         console.log( date )
+
+
+
 
         return (
 
@@ -133,11 +167,16 @@ class ModalHRSelecttion extends React.Component{
                             <label>Company</label>
                             <MySelect options={[
                             { value: 'quikfox', label: 'Quikfox' },
+                            { value: 'quikfoxServices', label: 'Quikfox Services' },
                             { value: 'frox', label: 'FROX' },
-                            { value: 'quikfoxServices', label: 'Quikfox Services' }
+                            { value: 'stamford', label: 'Stamford' },
+                            { value: 'akros', label: 'Akros' },
+                            { value: 'private', label: 'Private' }
+
                             ]}
                             onChange={ this.handleCompanyChange }
-                                value={ this.state.company }
+                            value={ this.state.company }
+                                optionRenderer={ this.customSelectRenderer }
                             >
                             </MySelect>
                         </div>
