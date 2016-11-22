@@ -12,6 +12,16 @@ div[name=background], .forgotPasswordForm{
     margin-left: -1em;
 }
 
+button.btn.btn-default:hover {
+    background: white;
+    color: red;
+    box-shadow: red 1px 1px;
+}
+
+button.btn.btn-lg.btn-primary:hover {
+    box-shadow: orange 1px 1px;
+}
+
 .bookARoomPage .container {
     margin-left: 0;
     width: 100%;
@@ -290,4 +300,35 @@ margin-top: 5em;
     color: white;
     font-weight: 400;
     background-color: darkgrey;
+}
+
+
+/* Hours selection modal */
+
+.modal-content{
+    color: rgb(51, 51, 51);
+    -webkit-font-smoothing: antialiased;
+}
+
+
+.modal-title, .modal-content h4, .modal-content label{
+   font:  1.4em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.modal-content label{
+    font-size: 1.1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.4em;
+}
+
+
+
+
+.ccRequired {
+    color: #F7751F;
+}
+
+
+.timepicker-bubble:hover circle, .timepicker-bubble.active circle{
+    fill: lightcoral;
 }

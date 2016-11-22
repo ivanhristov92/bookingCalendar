@@ -137,28 +137,43 @@ class Room extends React.Component{
     }
 
     handleBookingSave( data ){
+
         console.log( data );
-        this.context.bookingServices.createBooking( data )
-        .then( ( response )=> {
+        return this.context.bookingServices.createBooking( data )
+                .then( ( response )=> {
 
-            let parsedResponse;
-            try {
-                parsedResponse= JSON.parse( response );
-            }
-            catch(err) {
-                parsedResponse = response;
-            }
+                    let parsedResponse;
+                    try {
+                        parsedResponse= JSON.parse( response );
+                    }
+                    catch(err) {
+                        parsedResponse = response;
+                    }
 
-            if( parsedResponse.object ){
+                    if( parsedResponse.object ){
 
-                console.log('response from createBooking service',  parsedResponse.message );
-                this.closeModal();
-                this.props.updateRoom( parsedResponse.object );
-            } else {
-                console.log('String: response from createBooking service',  parsedResponse );
-            }
-        });
-    }
+                        console.log('response from createBooking service',  parsedResponse.message );
+                        this.closeModal();
+                        this.props.updateRoom( parsedResponse.object );
+
+                        //used for updating error messages at modalHrSelection
+                        return {
+                            error: false,
+                            parsedResponse: parsedResponse
+                        }
+
+                    } else {
+                        console.log('String: response from createBooking service',  parsedResponse );
+
+                        //used for updating error messages at modalHrSelection
+                        return {
+                            error: true,
+                            parsedResponse: parsedResponse
+                        }
+
+                    }
+                });
+        }
 
     handleMouseover( e ){
         let spans = $( 'span.expand' );

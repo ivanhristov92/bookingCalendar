@@ -14,12 +14,13 @@ class ModalHRSelecttion extends React.Component{
         super( props );
 
         this.state={
-
-            startTime: '',
-            endTime: '',
-            company: '',
-            comments: 'aaa'
-
+            booking: {
+                startTime: '',
+                endTime: '',
+                company: '',
+                comments: 'aaa'
+            },
+            error:''
         };
 
         this.handleStartTimeSelect = this.handleStartTimeSelect.bind( this );
@@ -35,7 +36,7 @@ class ModalHRSelecttion extends React.Component{
         let mins = (parseInt( minutes ) < 10) ? ( `0${minutes}` ) : ( minutes );
         let state = $.extend({}, this.state);
         let time = `${ hours }:${ mins }`;
-        state.startTime = time;
+        state.booking.startTime = time;
         this.setState( state );
     }
 
@@ -44,14 +45,14 @@ class ModalHRSelecttion extends React.Component{
         let state = $.extend({}, this.state);
         let mins = (parseInt( minutes ) < 10) ? ( `0${minutes}` ) : ( minutes );
         let time = `${ hours }:${ mins }`;
-        state.endTime = time;
+        state.booking.endTime = time;
         this.setState( state );
     }
 
     handleCompanyChange( data ){
         console.log('company name change', data.value);
         let state = $.extend({}, this.state);
-        state.company = data.value;
+        state.booking.company = data.value;
         this.setState( state );
     }
 
@@ -59,12 +60,12 @@ class ModalHRSelecttion extends React.Component{
 
         console.log( 'comments change', data.value );
         let state = $.extend( {}, this.state );
-        state.comments = $( e.currentTarget ).val();
+        state.booking.comments = $( e.currentTarget ).val();
         this.setState( state );
     }
 
     handleBookingSave ( e ){
-        let booking = $.extend( {}, this.state ),
+        let booking = $.extend( {}, this.state.booking ),
             date,
             d = this.props.date,
             room = this.props.roomName.match(/\d/)[0];
@@ -77,7 +78,17 @@ class ModalHRSelecttion extends React.Component{
 
         booking.date = date;
         booking.room = room;
-        this.props.save( booking );
+        this.props.save( booking )
+        .then( ( parsedResponse )=>{
+            console.log( 'parsedResponse from booking save @ hrSelection modal', parsedResponse );
+                if( parsedResponse.error ){
+
+                    let state = $.extend({}, this.state);
+                    state.error = parsedResponse.parsedResponse;
+                    this.setState( state );
+                }
+
+        })
     }
 
 
@@ -113,6 +124,8 @@ class ModalHRSelecttion extends React.Component{
 
     render() {
 
+        console.log( this.state )
+
         let room = this.props.roomName.match(/\d/);
         console.log( 'room', room[0] )
 
@@ -126,10 +139,7 @@ class ModalHRSelecttion extends React.Component{
             date += d[2];
         }
 
-        console.log( date )
-
-
-
+        //console.log( date )
 
         return (
 
@@ -143,28 +153,28 @@ class ModalHRSelecttion extends React.Component{
 
 
                     <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title">Booking Time: Room { room[0] } <span style={{ float: 'right', marginRight: '1em'}}> { date }</span></Modal.Title>
+                        <Modal.Title id="contained-modal-title"><span>ROOM { room[0] }</span> <span style={{ float: 'right', marginRight: '1em'}}> { date }</span></Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="row">
                         <div className="col-sm-12 text-center">
-                            <h4>Start Time</h4>
+                            <h4>Start Time <span className="ccRequired">*</span></h4>
                             <Time onSelect={ this.handleStartTimeSelect } ></Time>
                         </div>
 
                         <div className="col-sm-12 text-center">
-                            <h4>End Time</h4>
+                            <h4>End Time <span className="ccRequired">*</span></h4>
                             <Time onSelect={ this.handleEndTimeSelect } ></Time>
                         </div>
                         <div className="col-sm-12 text-left">
                             <label>Comments</label>
                             <inpit className="form-control" name="comments" placeholder="comments"
                                 onChange={ this.handleCommentsChange }
-                                value={ this.state.comments }
+                                value={ this.state.booking.comments }
                                 />
                         </div>
 
                         <div className="col-sm-6 text-left">
-                            <label>Company</label>
+                            <label>Company <span className="ccRequired">*</span></label>
                             <MySelect options={[
                             { value: 'quikfox', label: 'Quikfox' },
                             { value: 'quikfoxServices', label: 'Quikfox Services' },
@@ -175,7 +185,7 @@ class ModalHRSelecttion extends React.Component{
 
                             ]}
                             onChange={ this.handleCompanyChange }
-                            value={ this.state.company }
+                            value={ this.state.booking.company }
                                 optionRenderer={ this.customSelectRenderer }
                             >
                             </MySelect>
@@ -187,7 +197,10 @@ class ModalHRSelecttion extends React.Component{
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button className="btn-primary" onClick={ this.handleBookingSave}>Save Booking</Button>
+                        <div className="col-sm-12 text-center">
+                            <p className="errorMessage ccRequired">{ this.state.error }</p>
+                        </div>
+                        <Button className="btn-primary" onClick={ this.handleBookingSave} style={{ backgroundColor: 'rgb(68, 138, 255)' }}>Save Booking</Button>
                         <Button onClick={close}>Close</Button>
                     </Modal.Footer>
 
