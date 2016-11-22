@@ -12,13 +12,13 @@ div[name=background], .forgotPasswordForm{
     margin-left: -1em;
 }
 
-button.btn.btn-default:hover {
+button.btn.btn-default.custom:hover {
     background: white;
     color: red;
     box-shadow: red 1px 1px;
 }
 
-button.btn.btn-lg.btn-primary:hover {
+button.btn.btn-lg.btn-primary.custom:hover {
     box-shadow: orange 1px 1px;
 }
 

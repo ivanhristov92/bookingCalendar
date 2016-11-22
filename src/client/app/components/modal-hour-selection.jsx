@@ -28,6 +28,7 @@ class ModalHRSelecttion extends React.Component{
         this.handleCompanyChange = this.handleCompanyChange.bind( this );
         this.handleCommentsChange = this.handleCommentsChange.bind( this );
         this.handleBookingSave = this.handleBookingSave.bind( this );
+        this.cleanState = this.cleanState.bind( this );
         this.customSelectRenderer = this.customSelectRenderer.bind( this );
     }
 
@@ -122,9 +123,30 @@ class ModalHRSelecttion extends React.Component{
 
     }
 
-    render() {
 
-        console.log( this.state )
+    cleanState(){
+        let state={
+            booking: {
+                startTime: '',
+                endTime: '',
+                company: '',
+                comments: 'aaa'
+            },
+            error:''
+        };
+
+        this.setState( state );
+    }
+
+
+
+    componentWillReceiveProps( props ){
+        if( !props.shouldShow ){
+            this.cleanState();
+        }
+    }
+
+    render() {
 
         let room = this.props.roomName.match(/\d/);
         console.log( 'room', room[0] )
@@ -138,8 +160,6 @@ class ModalHRSelecttion extends React.Component{
             date +=  ( d[1] < 10 ) ? ( '0' + d[1] + '-' ) : ( d[1] + '-' );
             date += d[2];
         }
-
-        //console.log( date )
 
         return (
 

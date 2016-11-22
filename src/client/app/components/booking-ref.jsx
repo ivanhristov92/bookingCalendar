@@ -54,7 +54,7 @@ class BookingRef extends React.Component{
                                 </div>
 
                                 <div className="col-sm-12 text-right deleteBtnRow">
-                                    <button className="btn btn-default" onClick={ this.props.onOpenDeleteModal }>delete</button>
+                                    <button className="btn btn-default custom" onClick={ this.props.onOpenDeleteModal }>delete</button>
                                 </div>
 
                             </div>

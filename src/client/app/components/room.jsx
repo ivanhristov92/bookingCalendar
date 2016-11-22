@@ -114,7 +114,7 @@ class Room extends React.Component{
     openModal(){
         let state = $.extend( {}, this.state );
         state.showModal = true;
-        this.setState( state);
+        this.setState( state );
     }
 
     closeModal(){
@@ -355,8 +355,10 @@ class Room extends React.Component{
                        <Button
                            bsStyle="primary"
                            bsSize="large"
-                           onClick={ this.openModal }>
+                           onClick={ this.openModal }
+                           className="custom">
                            Book
+
                        </Button>
                    </div>
                     <div className="col-sm-12 roomDateRow">
