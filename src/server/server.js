@@ -107,7 +107,12 @@ app.get('/src/client/build/bundle.js', function(req, res){
 app.get('/src/client/images/:image', function(req, res){
     res.sendFile( req.params.image, {root: './../client/images/'});
 });
-app.get('/manageUsers', middleware.requireAuth, function(req, res){
+
+
+
+/** Front-end Admin API */
+
+app.get('/admin/manageUsers', middleware.requireAuth, middleware.isSuperUser, function(req, res){
     res.sendFile( 'index.html', {root: './../client/'});
 });
 

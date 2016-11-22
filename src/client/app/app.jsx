@@ -36,7 +36,7 @@ render(
             <Route path="/myProfile" component={ MyProfile }>
             </Route>
 
-            <Route path="/manageUsers" component={ ManageUsers }>
+            <Route path="/admin/manageUsers" component={ ManageUsers }>
             </Route>
 
         </Route>

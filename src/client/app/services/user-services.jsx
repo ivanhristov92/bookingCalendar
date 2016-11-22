@@ -67,11 +67,32 @@ const UserServices = ( baseUrl ) =>{
     }
 
 
+    let getAllUsers = ()=>{
+
+        return new Promise( ( resolve, reject )=>{
+
+            $.ajax({
+
+                //method: 'POST',
+                //url: base + '/api/users/edit',
+                //contentType: 'application/json',
+                //data: JSON.stringify( newUser ),
+                //success: ( response )=>{
+                //    return resolve ( response )
+                //}
+            });
+
+        });
+
+    }
+
+
     return {
         base: base,
         logUser: logUser,
         logoutUser: logoutUser,
-        editUser: editUser
+        editUser: editUser,
+        getAllUsers: getAllUsers
     }
 
 }
