@@ -154,6 +154,10 @@ margin-top: 5em;
     background-color: rgb(85, 159, 255);
 }
 
+.expandChild.private{
+    background-color: #ff6699;
+}
+
 .expand {
     top: -10px;
     height: 20px;

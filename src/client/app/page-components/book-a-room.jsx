@@ -21,7 +21,8 @@ class BookARoom extends React.Component{
             show: '1',
             selectedDate:'',
             bookings: [],
-            calendarDate : ''
+            calendarDate : '',
+            username: ''
         }
 
         this.getBookingsForDate = this.getBookingsForDate.bind( this );
@@ -85,8 +86,10 @@ class BookARoom extends React.Component{
 
         this.getBookingsForDate( d )
 
-        .then( ( response )=>{
-                //console.log( 'response from getBookingsForDate', response );
+        .then( ( resp )=>{
+
+
+                //console.log( 'response from getBookingsForDate username', username );
                 let state = $.extend({}, this.state);
 
                 let date = ( d[0] < 10 ) ? ( '0' + d[0] + '-' ) : ( d[0] + '-' ),
@@ -96,7 +99,8 @@ class BookARoom extends React.Component{
 
                 state.selectedDate = d;
                 state.calendarDate = date;
-                state.bookings = JSON.parse( response );
+                state.bookings = JSON.parse( resp.response );
+                state.username = resp.username;
                 this.setState( state );
         });
     }
@@ -127,6 +131,7 @@ class BookARoom extends React.Component{
 
         let bookings = this.filterBookingsByRoom();
         //console.log( 'bookings by room', bookings );
+        console.log( 'state from book-a-room', this.state )
 
         let date = this.state.selectedDate;
         let id = 0;
@@ -157,7 +162,7 @@ class BookARoom extends React.Component{
             <div>
                 <div name="" className="row bookARoomPage">
                     <div className="col-sm-12">
-                        <Menu logout={ this.handleLogoutUser }></Menu>
+                        <Menu username={ this.state.username } logout={ this.handleLogoutUser }></Menu>
                     </div>
 
                     <div className="col-sm-3 calendarColumn">

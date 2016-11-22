@@ -23,8 +23,13 @@ const BookingServices = ( baseUrl ) =>{
                 url: base + '/api/bookings',
                 contentType: 'application/json',
                 data: JSON.stringify( { date: fullDate }),
-                success: ( response )=>{
-                    resolve( response );
+                success: ( response, textStatus, jqXHR  )=>{
+                    var username = jqXHR.getResponseHeader('username');
+                    var resp = {
+                        response: response,
+                        username: username
+                    }
+                    resolve( resp );
                 }
             });
         });

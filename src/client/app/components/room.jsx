@@ -18,7 +18,8 @@ class Room extends React.Component{
             showModal: false,
             showBookings: [],
             bookingsByHours: [],
-            showDeleteModal: false
+            showDeleteModal: false,
+            errorMessageFromDeleting: ''
         }
 
         this.openModal = this.openModal.bind( this );
@@ -205,16 +206,24 @@ class Room extends React.Component{
         console.log( 'closing delete modal baby' );
         let state = $.extend({}, this.state);
         state.showDeleteModal = false;
+        state.errorMessageFromDeleting = '';
         this.setState( state );
     }
 
     handleDelete( e ){
-        console.log( 'deleting baby' );
         let currentBooking = this.state.showBookings[0];
         console.log( currentBooking );
         this.context.bookingServices.deleteBooking( currentBooking )
         .then( ( response )=>{
                 console.log( 'response from deleteBooking', response );
+
+                if( response.error ){
+
+                    let state = $.extend( {}, this.state );
+                    state.errorMessageFromDeleting = response.message;
+                    this.setState( state );
+                    return;
+                }
                 this.handleDeleteModalClose();
                 this.props.refreshRoom(currentBooking._id);
             });
@@ -339,9 +348,6 @@ class Room extends React.Component{
 
             });
         });
-
-
-        console.log( 'bookingSpans', bookingSpans )
 
 
         return (
@@ -477,7 +483,7 @@ class Room extends React.Component{
 
 
                         </div>
-                        <ModalDelete shouldShow={ this.state.showDeleteModal } onClose={ this.handleDeleteModalClose } onDelete = { this.handleDelete }></ModalDelete>
+                        <ModalDelete errorMessageFromDeleting={ this.state.errorMessageFromDeleting } shouldShow={ this.state.showDeleteModal } onClose={ this.handleDeleteModalClose } onDelete = { this.handleDelete }></ModalDelete>
 
                     </div>
                </div>

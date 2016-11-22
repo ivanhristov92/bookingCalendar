@@ -27,6 +27,13 @@ var allowCrossDomain = function(req, res, next) {
     next();
 }
 
+
+var addCookies = function(req, res, next) {
+
+    res.setHeader( "username", req.cookies.bookingUserUsername );
+    return next();
+}
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -34,7 +41,7 @@ app.use(bodyParser.urlencoded({
 }));
 const cookieParser = require( 'cookie-parser' );
 app.use( cookieParser());
-app.use(allowCrossDomain);
+app.use( allowCrossDomain );
 
 
 
@@ -70,7 +77,7 @@ app.post('/api/bookings/create', function( req, res ){
 app.post('/api/bookings/delete', function( req, res ){
     bookingActions.deleteBooking( req,res );
 });
-app.post('/api/bookings', function( req, res ){
+app.post('/api/bookings', addCookies, function( req, res ){
     bookingActions.getAllBookings( req,res );
 });
 
@@ -100,7 +107,9 @@ app.get('/src/client/build/bundle.js', function(req, res){
 app.get('/src/client/images/:image', function(req, res){
     res.sendFile( req.params.image, {root: './../client/images/'});
 });
-
+app.get('/manageUsers', middleware.requireAuth, function(req, res){
+    res.sendFile( 'index.html', {root: './../client/'});
+});
 
 
 

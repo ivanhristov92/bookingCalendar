@@ -12,8 +12,6 @@ class ModalDelete extends React.Component{
     constructor( props ){
         super( props );
 
-        this.state={};
-
         this.onDelete = this.onDelete.bind( this );
         this.onClose = this.onClose.bind( this );
     }
@@ -48,7 +46,9 @@ class ModalDelete extends React.Component{
 
                     </Modal.Body>
                     <Modal.Footer>
-
+                        <div className="col-sm-12 text-center">
+                            <p className="errorMessage ccRequired">{ this.props.errorMessageFromDeleting }</p>
+                        </div>
                     </Modal.Footer>
 
                 </Modal>

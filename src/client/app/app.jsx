@@ -15,6 +15,7 @@ import Login from './page-components/login.jsx';
 import ForgotPassword from './page-components/forgot-password.jsx';
 import BookARoom from './page-components/book-a-room.jsx';
 import MyProfile from './page-components/my-profile.jsx';
+import ManageUsers from './page-components/manage-users.jsx';
 
 
 render(
@@ -33,6 +34,9 @@ render(
             </Route>
 
             <Route path="/myProfile" component={ MyProfile }>
+            </Route>
+
+            <Route path="/manageUsers" component={ ManageUsers }>
             </Route>
 
         </Route>

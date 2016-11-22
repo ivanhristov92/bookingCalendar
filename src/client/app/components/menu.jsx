@@ -32,6 +32,10 @@ class Menu extends React.Component{
     }
 
 
+    componentDidMount(){
+
+    }
+
     render() {
 
         return(
@@ -45,7 +49,7 @@ class Menu extends React.Component{
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav pullRight>
-
+                        <NavItem eventKey={1} href="#" onClick={ this.handleMyProfile }>{ this.props.username }</NavItem>
                         <NavItem eventKey={1} href="#" onClick={ this.handleMyProfile }>My Profile</NavItem>
                         <NavItem eventKey={2} href="#" onClick={ this.logoutUser }>Log out</NavItem>
                     </Nav>

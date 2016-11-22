@@ -3,6 +3,7 @@
  */
 
 var Booking = require( './../models/Booking.js' );
+var User = require( './../models/User.js' );
 
 
 
@@ -57,7 +58,7 @@ function getAllBookings( req, res ){
         console.log( opts )
         return Booking.find( opts, function( err, bookings ){
             if(err) throw err;
-            console.log( 'bookings', bookings )
+            //console.log( 'bookings', bookings )
             res.send( JSON.stringify( bookings ) );
         });
 
@@ -85,12 +86,17 @@ function deleteBooking( req, res ){
     console.log( 'req.body from deleteBooking', req.body );
     console.log( 'req.body._id', req.body._id );
 
-    Booking.remove({ _id: req.body._id }, function( err, booking ) {
-        if ( err ){ throw err };
+    checkIfUserCanDeleteThisBooking( req, res, function( req, res ){
 
-        res.send( "The booking you selected should have been deleted" );
+        Booking.remove({ _id: req.body._id }, function( err, booking ) {
+            if ( err ){ throw err };
 
+            res.send( "The booking you selected should have been deleted" );
+
+        });
     });
+
+
 
 
 
@@ -360,6 +366,55 @@ function checkIfAllInfoIsProvided( req, res, args ){
         }
     }
 
-return passes;
+    return passes;
+}
 
+
+
+function checkIfUserCanDeleteThisBooking( req, res, callback ){
+
+    var userId = req.cookies.bookingUser;
+
+    User.find({ _id: userId }, function( err, users ){
+        if ( err ) throw err;
+
+        var response = {
+            error: false,
+            message: ''
+        };
+
+        var currentUser = users[0];
+
+        console.log( 'currentUser', users[0].superUser )
+
+        if( !currentUser ){
+            response.error = true;
+            response.message = 'You are not signed in!';
+
+            return res.send( response );
+        }
+
+        var userCompany = currentUser.company;
+
+        var reqCompany = req.body.company;
+
+        var isSuperUser = currentUser.toObject()["superUser"];
+
+        if( !reqCompany ){
+            response.error = true;
+            response.message = 'You have not selected a company for your profile!';
+
+            return res.send( response );
+        }
+
+        if( userCompany !== reqCompany && !isSuperUser ){
+            response.error = true;
+            response.message = 'You cannot delete this booking. It was not created by your company!';
+
+            return res.send( response );
+        }
+
+        callback( req, res );
+
+    });
 }

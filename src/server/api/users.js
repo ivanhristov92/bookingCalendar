@@ -33,7 +33,7 @@ function login( req, res ){
         } else {
             if( person.password === password ){
 
-                createSession( req, res, { name: 'bookingSession' }, person._id );
+                createSession( req, res, { name: 'bookingSession' }, person._id, person.username );
                return;
             }
             res.send( 'Wrong credentials!!' );
@@ -238,13 +238,14 @@ exports.editUser = editUser;
 /* Create Session */
 /** ***************/
 
-function createSession( req, res, options, currentUserId ){
+function createSession( req, res, options, currentUserId, currentUserUsername ){
     var cookieName = options.name;
     if ( req.cookies ) {
         if( !req.cookies.cookieName ){
             var randomNumber=Math.random().toString();
             randomNumber=randomNumber.substring(2,randomNumber.length);
             res.cookie('bookingUser', currentUserId, { maxAge: 900000, httpOnly: true });
+            res.cookie('bookingUserUsername', currentUserUsername, { maxAge: 900000, httpOnly: true });
             res.cookie('bookingSession',randomNumber, { maxAge: 900000, httpOnly: true });
             res.send( 'cookie created' );
         } else {
