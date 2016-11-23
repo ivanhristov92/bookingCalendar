@@ -10,6 +10,28 @@ class BookingRef extends React.Component{
     constructor( props ){
         super( props );
 
+        this.filterCompanyName = this.filterCompanyName.bind( this );
+
+    }
+
+    filterCompanyName( compName ){
+        let filtered = "";
+
+        for( let i = 0; i < compName.length; i++ ){
+
+            let char;
+            if( i === 0 ){
+                char = compName[i].toUpperCase();
+            } else {
+                char = compName[i];
+
+                if( char.match( /[A-Z]/ ) ){
+                    char = " " + char;
+                }
+            }
+            filtered += char;
+        }
+        return filtered;
     }
 
 
@@ -26,6 +48,8 @@ class BookingRef extends React.Component{
         }
 
         bookings = bookings.map( ( booking )=>{
+
+
             return (
 
                 <div key={id++} className="col-sm-12">
@@ -42,7 +66,7 @@ class BookingRef extends React.Component{
                                 </div>
 
                                 <div className="col-sm-12">
-                                    Company: <span className="bookingRefFiledContent">{ booking.company }</span>
+                                    Company: <span className="bookingRefFiledContent">{ this.filterCompanyName( booking.company ) }</span>
                                 </div>
 
                                 <div className="col-sm-12 bookingHoursRow">

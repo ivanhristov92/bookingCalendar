@@ -150,13 +150,29 @@ margin-top: 5em;
     background: #FF9900
 }
 
-.expandChild.stamford{
-    background-color: rgb(85, 159, 255);
+.expandChild.quikfoxServices{
+    background: #a7a9ac
 }
+
+.expandChild.stamford{
+    background-color: #ffa526;
+}
+
+.expandChild.akros{
+    background-color: #d5002d
+}
+
+.expandChild.frox{
+    background-color: #1f60ad
+}
+
+
 
 .expandChild.private{
     background-color: #ff6699;
 }
+
+
 
 .expand {
     top: -10px;

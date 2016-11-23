@@ -8,6 +8,8 @@
 var express = require('express')
 var app = express();
 var mongoose = require( 'mongoose' );
+var sanitizeHtml = require('sanitize-html');
+
 var userActions = require( './api/users.js' );
 var bookingActions = require( './api/bookings.js' );
 var middleware = require( './api/middleware.js' );
@@ -19,20 +21,11 @@ var middleware = require( './api/middleware.js' );
 
 /** Pre-functions/ App configuration */
 
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-
-    next();
-}
 
 
-var addCookies = function(req, res, next) {
 
-    res.setHeader( "username", req.cookies.bookingUserUsername );
-    return next();
-}
+
+
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -41,7 +34,7 @@ app.use(bodyParser.urlencoded({
 }));
 const cookieParser = require( 'cookie-parser' );
 app.use( cookieParser());
-app.use( allowCrossDomain );
+app.use( middleware.allowCrossDomain );
 
 
 
@@ -57,7 +50,7 @@ app.post('/api/login', function( req, res ){
 app.all('/api/logout', function( req, res ){
     userActions.logout( req, res );
 });
-app.post('/api/createUser', middleware.requireAuth , function( req, res ){
+app.post('/api/createUser', middleware.requireAuth, function( req, res ){
     userActions.createUser( req.body,res );
 });
 app.get('/api/users', middleware.requireAuth, function( req, res ){
@@ -71,13 +64,13 @@ app.post('/api/users/edit', middleware.requireAuth, function( req, res ){
 
 
 //BOOKINGS
-app.post('/api/bookings/create', function( req, res ){
+app.post('/api/bookings/create', middleware.sanitize, function( req, res ){
     bookingActions.createBooking( req,res );
 });
 app.post('/api/bookings/delete', function( req, res ){
     bookingActions.deleteBooking( req,res );
 });
-app.post('/api/bookings', addCookies, function( req, res ){
+app.post('/api/bookings', middleware.addCookies, function( req, res ){
     bookingActions.getAllBookings( req,res );
 });
 

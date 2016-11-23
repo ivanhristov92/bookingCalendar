@@ -326,7 +326,7 @@ class Room extends React.Component{
                         companyClass = "frox";
                         break;
                     case "stamford":
-                        companyClass = "a";
+                        companyClass = "stamford";
                         break;
                     case "akros":
                         companyClass = "akros";

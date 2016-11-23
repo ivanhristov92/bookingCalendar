@@ -98,19 +98,19 @@ class ModalHRSelecttion extends React.Component{
 
         switch( option['value'] ){
             case "quikfox":
-                backgroundColor="orange";
+                backgroundColor="#FF9900";
                 break;
             case "frox":
-                backgroundColor = "rgb(85, 159, 255)";
+                backgroundColor = "#1f60ad";
                 break;
             case "stamford":
-                backgroundColor = "rgb(85, 159, 255)";
+                backgroundColor = "#ffa526";
                 break;
             case "akros":
-                backgroundColor = "rgb(85, 159, 255)";
+                backgroundColor = "#d5002d";
                 break;
             case "quikfoxServices":
-                backgroundColor="orange";
+                backgroundColor="#a7a9ac";
                 break;
             case "private":
                 backgroundColor = "#ff6699";

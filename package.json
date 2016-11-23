@@ -31,6 +31,7 @@
     "react-select": "^1.0.0-rc.2",
     "react-select2": "^4.0.2",
     "react-timepicker": "^1.1.5",
+    "sanitize-html": "^1.13.0",
     "webpack": "^1.13.3"
   },
   "devDependencies": {

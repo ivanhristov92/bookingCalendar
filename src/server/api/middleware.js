@@ -3,6 +3,13 @@
  */
 
 var User = require( './../models/User.js' );
+var sanitizeHtml = require('sanitize-html');
+
+
+
+/** **********/
+/* Require Auth */
+/** **********/
 
 function requireAuth( req, res, next ) {
 
@@ -17,8 +24,6 @@ function requireAuth( req, res, next ) {
 }
 
 exports.requireAuth = requireAuth;
-
-
 
 
 
@@ -50,4 +55,49 @@ function isSuperUser( req, res, next ){
 exports.isSuperUser = isSuperUser;
 
 
-/////////////////////////////////////////////////////////////////////////////////////
+
+
+/** **********/
+/* Sanitize */
+/** **********/
+
+function sanitize(req, res, next) {
+
+    for( var prop in req.body ){
+        req.body[prop] = sanitizeHtml( req.body[prop] );
+        console.log( req.body[prop] );
+    }
+
+    return next();
+}
+exports.sanitize = sanitize;
+
+
+
+
+/** **********/
+/* allowCrossDomain */
+/** **********/
+
+function allowCrossDomain(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+exports.allowCrossDomain = allowCrossDomain;
+
+
+
+
+/** **********/
+/* addCookies */
+/** **********/
+
+function addCookies(req, res, next) {
+
+    res.setHeader( "username", req.cookies.bookingUserUsername );
+    return next();
+}
+exports.addCookies = addCookies;
