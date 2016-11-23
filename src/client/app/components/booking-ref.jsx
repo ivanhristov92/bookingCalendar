@@ -38,19 +38,19 @@ class BookingRef extends React.Component{
                             <div className="row">
 
                                 <div className="col-sm-12">
-                                    Name: <span>{ booking.username }</span>
+                                    Name: <span className="bookingRefFiledContent">{ booking.user }</span>
                                 </div>
 
                                 <div className="col-sm-12">
-                                    Company: <span>{ booking.company }</span>
+                                    Company: <span className="bookingRefFiledContent">{ booking.company }</span>
                                 </div>
 
                                 <div className="col-sm-12 bookingHoursRow">
                                     { booking.start + " - " + booking.end }
                                 </div>
 
-                                <div className="col-sm-12 comments">
-                                    Comments: <span>Some comments about this booking</span>
+                                <div className="col-sm-10 comments">
+                                    Comments: <span className="bookingRefFiledContent">{ booking.comments }</span>
                                 </div>
 
                                 <div className="col-sm-12 text-right deleteBtnRow">

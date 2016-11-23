@@ -18,7 +18,7 @@ class ModalHRSelecttion extends React.Component{
                 startTime: '',
                 endTime: '',
                 company: '',
-                comments: 'aaa'
+                comments: ''
             },
             error:''
         };
@@ -59,7 +59,6 @@ class ModalHRSelecttion extends React.Component{
 
     handleCommentsChange( e ){
 
-        console.log( 'comments change', data.value );
         let state = $.extend( {}, this.state );
         state.booking.comments = $( e.currentTarget ).val();
         this.setState( state );
@@ -130,7 +129,7 @@ class ModalHRSelecttion extends React.Component{
                 startTime: '',
                 endTime: '',
                 company: '',
-                comments: 'aaa'
+                comments: ''
             },
             error:''
         };
@@ -161,6 +160,7 @@ class ModalHRSelecttion extends React.Component{
             date += d[2];
         }
 
+
         return (
 
             <div className="modal-container" style={{height: 200}}>
@@ -186,26 +186,24 @@ class ModalHRSelecttion extends React.Component{
                             <Time onSelect={ this.handleEndTimeSelect } ></Time>
                         </div>
                         <div className="col-sm-12 text-left">
-                            <label>Comments</label>
-                            <inpit className="form-control" name="comments" placeholder="comments"
-                                onChange={ this.handleCommentsChange }
-                                value={ this.state.booking.comments }
-                                />
+                            <label>Comments <span className="ccRequired">*</span></label>
+                            <input type="text" className="form-control" onChange={ this.handleCommentsChange }
+                                value={ this.state.booking.comments } placeholder="Comments..." />
                         </div>
 
                         <div className="col-sm-6 text-left">
                             <label>Company <span className="ccRequired">*</span></label>
                             <MySelect options={[
-                            { value: 'quikfox', label: 'Quikfox' },
-                            { value: 'quikfoxServices', label: 'Quikfox Services' },
-                            { value: 'frox', label: 'FROX' },
-                            { value: 'stamford', label: 'Stamford' },
-                            { value: 'akros', label: 'Akros' },
-                            { value: 'private', label: 'Private' }
+                                { value: 'quikfox', label: 'Quikfox' },
+                                { value: 'quikfoxServices', label: 'Quikfox Services' },
+                                { value: 'frox', label: 'FROX' },
+                                { value: 'stamford', label: 'Stamford' },
+                                { value: 'akros', label: 'Akros' },
+                                { value: 'private', label: 'Private' }
 
-                            ]}
-                            onChange={ this.handleCompanyChange }
-                            value={ this.state.booking.company }
+                                ]}
+                                onChange={ this.handleCompanyChange }
+                                value={ this.state.booking.company }
                                 optionRenderer={ this.customSelectRenderer }
                             >
                             </MySelect>

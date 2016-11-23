@@ -336,3 +336,9 @@ margin-top: 5em;
 .timepicker-bubble:hover circle, .timepicker-bubble.active circle{
     fill: lightcoral;
 }
+
+
+.bookingRefFiledContent{
+    font-weight: bold;
+    font-size: 1.2em;
+}

@@ -22,7 +22,7 @@ function createBooking( req, res ){
 
     checkIfTimeIsFree( req, res, function( room, date, start, end, user, company, comments ){
 
-        var allInfo = checkIfAllInfoIsProvided( req, res, [room, date, start, end, company ] );
+        var allInfo = checkIfAllInfoIsProvided( req, res, [room, date, start, end, company, comments ] );
 
         if(!allInfo){ return res.send( 'Some parameter is missing. Please provide all relevant information!' ) }
 
@@ -146,7 +146,7 @@ function checkIfTimeIsFree( req, res, callback ){
         date = req.body.date,
         start = req.body.startTime,
         end = req.body.endTime,
-        user = req.body.user,
+        user = req.cookies.bookingUserUsername,
         company = req.body.company,
         comments = req.body.comments;
 
@@ -155,7 +155,8 @@ function checkIfTimeIsFree( req, res, callback ){
 
     var errors = {
         busy: 'The time you want to book interferes with an existing booking!',
-        outsideTimeFrame: 'The time you want to book starts outside the allowed booking timeframe!'
+        outsideTimeFrame: 'The time you want to book starts outside the allowed booking timeframe!',
+        invalidTime: 'The time you want to book is invalid!'
     }
 
 
@@ -340,6 +341,21 @@ function checkIfTimeIsFree( req, res, callback ){
             passesCheck.passes = false;
             passesCheck.errorMsg = errors.outsideTimeFrame;
         }
+
+        if( curEndHour < curStartHour ){
+
+            console.log( "ends before it event starts - cannot book!" );
+            passesCheck.passes = false;
+            passesCheck.errorMsg = errors.invalidTime;
+        } else if( curEndHour === curStartHour ){
+
+            if( curEndMins < curStartMins ){
+                console.log( "ends before it event starts - cannot book!" );
+                passesCheck.passes = false;
+                passesCheck.errorMsg = errors.invalidTime;
+            }
+        }
+
 
         if (!passesCheck.passes) {
             res.send(passesCheck.errorMsg);

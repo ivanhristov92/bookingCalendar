@@ -141,8 +141,8 @@ function listen () {
 }
 function connect () {
     //var options = { server: { socketOptions: { keepAlive: 1 } } };
-    //var connection = mongoose.connect( 'mongodb://localhost.localdomain:27017/roomBooking' ).connection;
-    var connection = mongoose.connect( 'mongodb://localhost:27017/roomBooking' ).connection;
+    var connection = mongoose.connect( 'mongodb://localhost.localdomain:27017/roomBooking' ).connection;
+    //var connection = mongoose.connect( 'mongodb://localhost:27017/roomBooking' ).connection;
     return connection;
 }
 //--------------------------------------------------------------------------------

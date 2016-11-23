@@ -412,7 +412,7 @@ class Room extends React.Component{
                                             { bookingSpans["12"] }
                                                 </span>
                                             </div>
-                                            s                                    </li>
+                                        </li>
 
 
                                         <li>
