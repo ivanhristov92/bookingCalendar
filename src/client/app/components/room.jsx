@@ -351,7 +351,7 @@ class Room extends React.Component{
 
 
         return (
-           <div className="col-sm-6 room">
+           <div className="col-sm-5 room">
                <div className="row" style={{minHeight: '348px'}}>
                    <div className="col-sm-10 roomNumberCol">
                        <h3>{ this.props.roomName }</h3>

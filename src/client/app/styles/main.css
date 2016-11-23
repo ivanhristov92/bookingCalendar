@@ -3,6 +3,30 @@ body{
     margin: 0;
 }
 
+
+.navbar.navbar-inverse{
+    background: #666;
+    border: none;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color: #F7941E;
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #F7941E;
+}
+
+
 div[name=background], .forgotPasswordForm{
     padding-top: 10em;
 }
@@ -12,6 +36,16 @@ div[name=background], .forgotPasswordForm{
     margin-left: -1em;
 }
 
+
+button.custom.btn.btn-lg.btn-primary {
+    position: absolute;
+    right: 10px;
+}
+
+button.btn.btn-default.custom {
+    border: 1px solid white;
+}
+
 button.btn.btn-default.custom:hover {
     background: white;
     color: red;
@@ -19,7 +53,15 @@ button.btn.btn-default.custom:hover {
 }
 
 button.btn.btn-lg.btn-primary.custom:hover {
-    box-shadow: orange 1px 1px;
+    /*box-shadow: white 1px 1px;*/
+    background: #ff9934;
+    border: none;
+}
+
+button.btn.btn-lg.btn-primary.custom:focus {
+    background: #ff9934;
+    border: none;
+    box-shadow: none;
 }
 
 .bookARoomPage .container {
@@ -34,10 +76,12 @@ button.btn.btn-lg.btn-primary.custom:hover {
 
 .room {
     height: 25em;
-    background: url('/src/client/images/blue.jpg');
-    color: lightskyblue;
+    background: url('/src/client/images/orange.jpg');
+    /*color: lightskyblue;*/
+    color: white;
     -webkit-font-smoothing: antialiased;
     border-radius: 3px;
+    margin-left: 1px;
 }
 
 .hoursTable{
@@ -264,6 +308,10 @@ margin-top: 5em;
     border-radius: 3px;
 }
 
+.Cal__Header__root {
+    background-color: #ff9934!important;
+}
+
 .calendarColumn{
     margin-top: 43px;
 }
@@ -271,6 +319,19 @@ margin-top: 5em;
 
 .calendarColumn .Cal__Container__root{
     width: 100% !important;
+}
+
+
+ul.Cal__Weekdays__root {
+    background: #fdaa2a !important;
+}
+
+.Cal__Today__root.Cal__Today__show.Cal__Today__chevronUp {
+    background: #666 !important;
+}
+
+.Cal__Day__selection {
+    background: #666 !important;
 }
 
 .calendarColumn>div{
@@ -308,19 +369,7 @@ margin-top: 5em;
 }
 
 
-.footer{
-    bottom: 0;
-    /*background-color: rgb(68, 138, 255);*/
-    color: rgb(255, 255, 255);
-    width: 100%;
-    left: 0;
-    height: 2em;
-    margin-top: 5em;
-    border-radius: 3px;
-    color: white;
-    font-weight: 400;
-    background-color: darkgrey;
-}
+
 
 
 /* Hours selection modal */
@@ -357,4 +406,25 @@ margin-top: 5em;
 .bookingRefFiledContent{
     font-weight: bold;
     font-size: 1.2em;
+}
+
+
+
+.footer{
+    bottom: 0;
+    /*background-color: rgb(68, 138, 255);*/
+    color: rgb(255, 255, 255);
+    width: 100%;
+    left: 0;
+    height: 2em;
+    margin-top: 5em;
+    border-radius: 3px;
+    color: white;
+    font-weight: 400;
+    /*background-color: darkgrey;*/
+    background: url( '/src/client/images/background_pattern.png' );
+}
+
+.footer div{
+    background: #ddd;
 }
